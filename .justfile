@@ -1,4 +1,4 @@
-key := "/boot/luks.key"
+key := "/luks.key"
 
 @default:
     just --list
