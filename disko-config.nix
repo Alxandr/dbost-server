@@ -69,12 +69,8 @@ in
         content = {
           type = "gpt";
           partitions = {
-            boot = {
-              size = "1M";
-              type = "EF02"; # for grub MBR
-            };
             ESP = esp_partition;
-						luks = luks_partition;
+            luks = luks_partition;
           };
         };
       };

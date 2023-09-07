@@ -13,14 +13,31 @@
     ];
 
   # Use the systemd-boot EFI boot loader.
-  #boot.loader.systemd-boot.enable = true;
-  #boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+
+  # grub
+  #boot.loader.grub = {
+  #  enable = true;
+  #  efiSupport = true;
+  #  enableCryptodisk = true;
+  #  device = "nodev";
+  #};
+
+  # luks
+  boot.initrd.luks.devices = {
+    crypted = {
+      #device = "/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_36603486-part2";
+      preLVM = true;
+      keyFile = "/boot/luks.key";
+    };
+  };
   #boot.loader.grub.devices = [ "/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_36603486" ];
-  boot.loader.grub.devices = ["nodev"];
-  boot.loader.grub.enable = true;
-  boot.loader.grub.efiSupport = true;
-  boot.loader.grub.efiInstallAsRemovable = true;
-  boot.loader.grub.enableCryptodisk = true;
+  #boot.loader.grub.devices = ["nodev"];
+  #boot.loader.grub.enable = true;
+  #boot.loader.grub.efiSupport = true;
+  #boot.loader.grub.efiInstallAsRemovable = true;
+  #boot.loader.grub.enableCryptodisk = true;
 
   networking.hostName = "dbost"; # Define your hostname.
   # Pick only one of the below networking options.
