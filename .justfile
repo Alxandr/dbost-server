@@ -4,7 +4,9 @@ key := "/boot/luks.key"
     just --list
 
 prepare: format
-    cp "{{justfile_directory()}}/*.nix" /mnt/etc/nixos/configuration.nix
+    cp "{{justfile_directory()}}/configuration.nix" /mnt/etc/nixos/configuration.nix
+    cp "{{justfile_directory()}}/disko-config.nix" /mnt/etc/nixos/disko-config.nix
+    cp "{{justfile_directory()}}/hardware-configuration.nix" /mnt/etc/nixos/hardware-configuration.nix
 
 format:
     mkdir -p /boot
