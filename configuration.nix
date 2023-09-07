@@ -32,7 +32,7 @@
       keyFile = "/etc/cryptroot.key";
     };
   };
-  boot.initrd.secrets."/etc/cryptroot.key" = "/boot/luks.key";
+  boot.initrd.secrets."/etc/cryptroot.key" = "/etc/cryptroot.key";
   #boot.loader.grub.devices = [ "/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_36603486" ];
   #boot.loader.grub.devices = ["nodev"];
   #boot.loader.grub.enable = true;

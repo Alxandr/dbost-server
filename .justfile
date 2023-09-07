@@ -1,4 +1,4 @@
-key := "/luks.key"
+key := "/etc/cryptroot.key"
 
 @default:
     just --list
