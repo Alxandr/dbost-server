@@ -32,7 +32,7 @@ let
 				mountpoint = "/nix";
 				mountOptions = [ "compress=zstd" "noatime" ];
 			};
-			"@swap" = {
+			"/@swap" = {
 				mountpoint = "/.swapvol";
 			};
 		};
