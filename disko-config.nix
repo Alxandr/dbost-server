@@ -65,7 +65,7 @@ in
     disk = {
       main = {
         type = "disk";
-        device = "/dev/disk/by-id/scsi-0QEMU_QEMU_HARDDISK_36603486";
+        device = "/dev/sda";
         content = {
           type = "gpt";
           partitions = {
