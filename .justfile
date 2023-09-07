@@ -3,7 +3,7 @@ key := "/luks.key"
 @default:
     just --list
 
-prepare: format generate-hw-config
+prepare: format
     nixos-generate-config --no-filesystems --root /mnt
     cp "{{justfile_directory()}}/configuration.nix" /mnt/etc/nixos/configuration.nix
     cp "{{justfile_directory()}}/disko-config.nix" /mnt/etc/nixos/disko-config.nix
