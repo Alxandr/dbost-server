@@ -233,8 +233,12 @@
         "flake-utils": "flake-utils",
         "home-manager": "home-manager",
         "neovim-flake": "neovim-flake",
-        "nixpkgs": "nixpkgs_2",
-        "nixpkgs-unstable": "nixpkgs-unstable"
+        "nixpkgs": [
+          "nixpkgs"
+        ],
+        "nixpkgs-unstable": [
+          "nixpkgs-unstable"
+        ]
       },
       "locked": {
         "lastModified": 1694361013,
@@ -1225,7 +1229,9 @@
     },
     "root": {
       "inputs": {
-        "nix-system": "nix-system"
+        "nix-system": "nix-system",
+        "nixpkgs": "nixpkgs_2",
+        "nixpkgs-unstable": "nixpkgs-unstable"
       }
     },
     "rust-overlay": {
