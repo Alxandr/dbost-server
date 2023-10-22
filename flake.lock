@@ -178,20 +178,22 @@
         "plugin-sqls-nvim": "plugin-sqls-nvim",
         "plugin-telescope": "plugin-telescope",
         "plugin-telescope-file-browser": "plugin-telescope-file-browser",
+        "plugin-telescope-live-grep-args": "plugin-telescope-live-grep-args",
         "plugin-todo-comments": "plugin-todo-comments",
         "plugin-tokyonight": "plugin-tokyonight",
         "plugin-trouble": "plugin-trouble",
+        "plugin-vim-be-good": "plugin-vim-be-good",
         "plugin-vim-vsnip": "plugin-vim-vsnip",
         "plugin-which-key": "plugin-which-key",
         "rnix-lsp": "rnix-lsp",
         "tidalcycles": "tidalcycles"
       },
       "locked": {
-        "lastModified": 1697069767,
-        "narHash": "sha256-k39Mdf/Ugpsgv6vOxdv6xMnbfsyb+x9Ei814uAAFj+c=",
+        "lastModified": 1697922087,
+        "narHash": "sha256-b7zp7GxpXnCqnKkVv0cY16BETjhnCPA/uVvpLUsz7X8=",
         "owner": "jordanisaacs",
         "repo": "neovim-flake",
-        "rev": "84d40158a0040b90c48537abc983c8a68c9d5b74",
+        "rev": "7bcc215d38226892849411721cfbc096fd7e4d2d",
         "type": "github"
       },
       "original": {
@@ -215,15 +217,15 @@
         "rust-overlay": "rust-overlay"
       },
       "locked": {
-        "lastModified": 1690581066,
-        "narHash": "sha256-6iv8IQZzumwOt4GZervQ1hWgJf/wHValP8dbVeNC6B0=",
-        "owner": "jordanisaacs",
+        "lastModified": 1697710615,
+        "narHash": "sha256-YL63eoy3C/WeDxwctbv9dJBjqBabx8cO7lVTlVn3FVI=",
+        "owner": "oxalica",
         "repo": "nil",
-        "rev": "cf44cd1c694edad2caabee5d402f67d5df0ab6dd",
+        "rev": "bd93024db616a528473a7210d2756c7118155de9",
         "type": "github"
       },
       "original": {
-        "owner": "jordanisaacs",
+        "owner": "oxalica",
         "repo": "nil",
         "type": "github"
       }
@@ -242,11 +244,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1697879058,
-        "narHash": "sha256-nHcj5ZQluPAzZWGVsQ6L2TiwwXcWMgnDKDfU4HsYaLs=",
+        "lastModified": 1697933936,
+        "narHash": "sha256-VhHRngBa0nYy1Vfi558UEd66a5+KjT+1ZRYcCr7g2oQ=",
         "owner": "Alxandr",
         "repo": "nix-system",
-        "rev": "02a5901812c6b696b4e3ed10ca7a3558dfa531ce",
+        "rev": "69da0f2c7d07b5e601734d977fa670a0b1165dbf",
         "type": "github"
       },
       "original": {
@@ -306,17 +308,17 @@
     "nmd": {
       "flake": false,
       "locked": {
-        "lastModified": 1680213367,
-        "narHash": "sha256-NbSXxpFAK5IMcsQTK0vSGy099HExx3SEagqW4Lpc+X8=",
-        "owner": "rycee",
+        "lastModified": 1687627428,
+        "narHash": "sha256-7zGfXuNS5RHqhpEdz2fwrtqvF86JRo5U1hrxZSYgcm8=",
+        "owner": "~rycee",
         "repo": "nmd",
-        "rev": "abb15317ebd17e5a0a7dd105e2ce52f2700185a8",
-        "type": "gitlab"
+        "rev": "824a380546b5d0d0eb701ff8cd5dbafb360750ff",
+        "type": "sourcehut"
       },
       "original": {
-        "owner": "rycee",
+        "owner": "~rycee",
         "repo": "nmd",
-        "type": "gitlab"
+        "type": "sourcehut"
       }
     },
     "plugin-bufdelete-nvim": {
@@ -1136,6 +1138,22 @@
         "type": "github"
       }
     },
+    "plugin-telescope-live-grep-args": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1693245982,
+        "narHash": "sha256-L2STMQude8DalHF4fYaJZNjvQHB1UtnQx8Gx2fPKcDA=",
+        "owner": "nvim-telescope",
+        "repo": "telescope-live-grep-args.nvim",
+        "rev": "851c0997d55601f2afd7290db0f90dc364e29f58",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nvim-telescope",
+        "repo": "telescope-live-grep-args.nvim",
+        "type": "github"
+      }
+    },
     "plugin-todo-comments": {
       "flake": false,
       "locked": {
@@ -1181,6 +1199,22 @@
       "original": {
         "owner": "folke",
         "repo": "trouble.nvim",
+        "type": "github"
+      }
+    },
+    "plugin-vim-be-good": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1667916364,
+        "narHash": "sha256-lJNY/5dONZLkxSEegrwtZ6PHYsgMD3nZkbxm6fFq3vY=",
+        "owner": "ThePrimeagen",
+        "repo": "vim-be-good",
+        "rev": "c290810728a4f75e334b07dc0f3a4cdea908d351",
+        "type": "github"
+      },
+      "original": {
+        "owner": "ThePrimeagen",
+        "repo": "vim-be-good",
         "type": "github"
       }
     },
