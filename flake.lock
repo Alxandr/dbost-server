@@ -635,11 +635,11 @@
         "stylix-unstable": "stylix-unstable"
       },
       "locked": {
-        "lastModified": 1742084875,
-        "narHash": "sha256-ihJ8eqCaH1Z9LXEBt0xNpSd9gaT8e0ZICEoOLxjHLjM=",
+        "lastModified": 1742174377,
+        "narHash": "sha256-ZDlX18c40oJl8+5QzFLaVwodfBPRjQM5X4YLtDBmZv0=",
         "owner": "Alxandr",
         "repo": "nix-system",
-        "rev": "2845d3792da9bf47e7d170e8ff227997129cbb9a",
+        "rev": "ad6f64a48eb6316cec4bf7bb481b9c000b980bcb",
         "type": "github"
       },
       "original": {
@@ -657,11 +657,11 @@
         ]
       },
       "locked": {
-        "lastModified": 1742003297,
-        "narHash": "sha256-TMhmam/T2C1tbGjNRI468lnaDtYOZ0uQTvN7Ad+wG54=",
+        "lastModified": 1742090119,
+        "narHash": "sha256-I+NlLtHpTsItYkHo4fFdM6moBHF156wM11TPWLcwdic=",
         "owner": "nix-community",
         "repo": "nix-vscode-extensions",
-        "rev": "f506d6e24cc3626683185d81870a6e960864b370",
+        "rev": "adcb8b54d64484bb74f1480acefc3c686f318917",
         "type": "github"
       },
       "original": {
