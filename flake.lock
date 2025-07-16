@@ -503,11 +503,11 @@
         "stylix-unstable": "stylix-unstable"
       },
       "locked": {
-        "lastModified": 1752366921,
-        "narHash": "sha256-R5Dh6mOuUxgoahQRTxwOtNcVauiIaKPNT66A+r8V68k=",
+        "lastModified": 1752701868,
+        "narHash": "sha256-NBWmXIdRvOO+oPOj1lGPIxUQRNMS3PTYk++QQmQtPeE=",
         "owner": "Alxandr",
         "repo": "nix-system",
-        "rev": "afa5dce939d7f772ebc601c97f9fa0c4797d7cd3",
+        "rev": "03f9a3736e95d1fe7c05e08b38cd71ccc4587791",
         "type": "github"
       },
       "original": {
