@@ -1,6 +1,13 @@
 { pkgs, ... }:
 {
   config = {
+    # Pangolin
+    services.pangolin = {
+      # enable = true;
+      baseDomain = "alxandr.me";
+      dashboardDomain = "pangolin.alxandr.me";
+    };
+
     # Setup auto-upgrade
     system.autoUpgrade = {
       enable = true;

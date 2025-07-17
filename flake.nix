@@ -44,7 +44,12 @@
   };
 
   outputs =
-    inputs@{ flake-parts, nix-system, ... }:
+    inputs@{
+      flake-parts,
+      nix-system,
+      nixpkgs-unstable,
+      ...
+    }:
     flake-parts.lib.mkFlake { inherit inputs; } (
       top@{
         config,
@@ -64,6 +69,28 @@
         ];
 
         flake.path = "github:Alxandr/dbost-server";
+
+        systemConfigurations.sharedModules = [
+          ./nixos_modules/pangolin.nix
+          (
+            { pkgs, ... }:
+            {
+              config.nixpkgs.overlays = [
+                (
+                  final: prev:
+                  let
+                    unstable = import nixpkgs-unstable {
+                      inherit (prev) system;
+                    };
+                  in
+                  {
+                    inherit (unstable) fosrl-pangolin fosrl-newt traefik;
+                  }
+                )
+              ];
+            }
+          )
+        ];
 
         systemConfigurations.systems.dbost = {
           system = "aarch64-linux";
