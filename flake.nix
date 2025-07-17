@@ -87,7 +87,12 @@
                     };
                   in
                   {
-                    inherit (unstable) fosrl-pangolin fosrl-newt traefik;
+                    inherit (unstable)
+                      fosrl-pangolin
+                      fosrl-newt
+                      fosrl-gerbil
+                      traefik
+                      ;
                   }
                 )
               ];
@@ -120,6 +125,7 @@
                 ssh-to-age
                 sops
                 just
+                vim
               ];
             };
           };

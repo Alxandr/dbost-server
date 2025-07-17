@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, config, ... }:
 {
   config = {
     # Bootloader.
@@ -15,6 +15,11 @@
         sopsFile = ../secrets/pangolin/pangolin.env;
         format = "dotenv";
         # restartUnits = [ "pangolin.service" ];
+      };
+      "traefik.env" = {
+        sopsFile = ../secrets/traefik/traefik.env;
+        format = "dotenv";
+        # restartUnits = [ "traefik.service" ];
       };
     };
 
@@ -43,9 +48,13 @@
 
     # Pangolin
     services.pangolin = {
-      # enable = true;
+      enable = true;
       baseDomain = "alxandr.me";
       dashboardDomain = "pangolin.alxandr.me";
+
+      # secrets
+      pangolinEnvironmentFile = config.sops.secrets."pangolin.env".path;
+      traefikEnvironmentFile = config.sops.secrets."traefik.env".path;
     };
 
     # Setup auto-upgrade
