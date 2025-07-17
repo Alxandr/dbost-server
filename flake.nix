@@ -6,7 +6,7 @@
     experimental-features = [
       "nix-command"
       "flakes"
-      "pipes"
+      "pipe-operators"
     ];
     trusted-users = [ "alxandr" ];
 
