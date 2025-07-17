@@ -1,12 +1,18 @@
 {
 	debug
-	http_port 80
+	http_port 10080
 	https_port 10443
 	default_bind [127.0.0.1]
 
 	email "alxandr@alxandr.me"
 
 	layer4 {
+		0.0.0.0:80 {
+			route {
+				proxy 127.0.0.1:10080
+			}
+		}
+
 		0.0.0.0:443 {
 			@headscale tls sni headscale.alxandr.me
 			route @headscale {

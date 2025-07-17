@@ -141,7 +141,7 @@
                 just
                 vim
                 jq
-                yq
+                yq-go
                 packages.caddy
               ];
             };

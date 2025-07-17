@@ -88,7 +88,7 @@
     };
 
     environment.systemPackages = with pkgs; [
-      yq
+      yq-go
       jq
       caddy
     ];
