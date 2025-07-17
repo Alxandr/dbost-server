@@ -14,12 +14,12 @@
       "pangolin.env" = {
         sopsFile = ../secrets/pangolin/pangolin.env;
         format = "dotenv";
-        # restartUnits = [ "pangolin.service" ];
+        restartUnits = [ "pangolin.service" ];
       };
       "traefik.env" = {
         sopsFile = ../secrets/pangolin/traefik.env;
         format = "dotenv";
-        # restartUnits = [ "traefik.service" ];
+        restartUnits = [ "traefik.service" ];
       };
     };
 
@@ -55,6 +55,14 @@
       # secrets
       pangolinEnvironmentFile = config.sops.secrets."pangolin.env".path;
       traefikEnvironmentFile = config.sops.secrets."traefik.env".path;
+
+      # config
+      config = {
+        domains."alxandr.me" = {
+          base_domain = "alxandr.me";
+          cert_resolver = "letsencrypt";
+        };
+      };
     };
 
     # Setup auto-upgrade
