@@ -1,6 +1,13 @@
 { pkgs, ... }:
 {
   config = {
+    # Bootloader.
+    boot.loader.systemd-boot.enable = true;
+    boot.loader.efi.canTouchEfiVariables = true;
+
+    # Enable networking
+    networking.networkmanager.enable = true;
+
     # Pangolin
     services.pangolin = {
       # enable = true;
