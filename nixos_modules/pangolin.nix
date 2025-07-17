@@ -492,67 +492,67 @@ in
               caServer = "https://acme-v02.api.letsencrypt.org/directory";
             };
           };
+        };
 
-          entryPoints = {
-            web.address = ":80";
-            websecure = {
-              address = ":443";
-              transport.respondingTimeouts.readTimeout = "30m";
-              http.tls.certResolver = "letsencrypt";
+        entryPoints = {
+          web.address = ":80";
+          websecure = {
+            address = ":443";
+            transport.respondingTimeouts.readTimeout = "30m";
+            http.tls.certResolver = "letsencrypt";
+          };
+        };
+
+        serversTransport.insecureSkipVerify = true;
+      };
+
+      dynamicConfigOptions = {
+        http = {
+          middlewares.redirect-to-https.redirectScheme.scheme = "https";
+
+          routers = {
+            # HTTP to HTTPS redirect router
+            main-app-router-redirect = {
+              rule = "Host(`${cfg.dashboardDomain}`)";
+              service = "next-service";
+              entryPoints = [ "web" ];
+              middlewares = [ "redirect-to-https" ];
+            };
+
+            # Next.js router (handles everything except API and WebSocket paths)
+            next-router = {
+              rule = "Host(`${cfg.dashboardDomain}`) && !PathPrefix(`/api/v1`)";
+              service = "next-service";
+              entryPoints = [ "websecure" ];
+              tls = {
+                certResolver = "letsencrypt";
+              };
+            };
+
+            # API router (handles /api/v1 paths)
+            api-router = {
+              rule = "Host(`${cfg.dashboardDomain}`) && PathPrefix(`/api/v1`)";
+              service = "api-service";
+              entryPoints = [ "websecure" ];
+              tls.certResolver = "letsencrypt";
+            };
+
+            # WebSocket router
+            ws-router = {
+              rule = "Host(`${cfg.dashboardDomain}`)";
+              service = "api-service";
+              entryPoints = [ "websecure" ];
+              tls.certResolver = "letsencrypt";
             };
           };
 
-          serversTransport.insecureSkipVerify = true;
-        };
-
-        dynamicConfigOptions = {
-          http = {
-            middlewares.redirect-to-https.redirectScheme.scheme = "https";
-
-            routers = {
-              # HTTP to HTTPS redirect router
-              main-app-router-redirect = {
-                rule = "Host(`${cfg.dashboardDomain}`)";
-                service = "next-service";
-                entryPoints = [ "web" ];
-                middlewares = [ "redirect-to-https" ];
-              };
-
-              # Next.js router (handles everything except API and WebSocket paths)
-              next-router = {
-                rule = "Host(`${cfg.dashboardDomain}`) && !PathPrefix(`/api/v1`)";
-                service = "next-service";
-                entryPoints = [ "websecure" ];
-                tls = {
-                  certResolver = "letsencrypt";
-                };
-              };
-
-              # API router (handles /api/v1 paths)
-              api-router = {
-                rule = "Host(`${cfg.dashboardDomain}`) && PathPrefix(`/api/v1`)";
-                service = "api-service";
-                entryPoints = [ "websecure" ];
-                tls.certResolver = "letsencrypt";
-              };
-
-              # WebSocket router
-              ws-router = {
-                rule = "Host(`${cfg.dashboardDomain}`)";
-                service = "api-service";
-                entryPoints = [ "websecure" ];
-                tls.certResolver = "letsencrypt";
-              };
-            };
-
-            services = {
-              next-service.loadBalancer.servers = [
-                { url = "http://localhost:${builtins.toString finalSettings.server.next_port}"; }
-              ]; # Next.js server
-              api-service.loadBalancer.servers = [
-                { url = "http://localhost:${builtins.toString finalSettings.server.external_port}"; }
-              ]; # API/WebSocket server
-            };
+          services = {
+            next-service.loadBalancer.servers = [
+              { url = "http://localhost:${builtins.toString finalSettings.server.next_port}"; }
+            ]; # Next.js server
+            api-service.loadBalancer.servers = [
+              { url = "http://localhost:${builtins.toString finalSettings.server.external_port}"; }
+            ]; # API/WebSocket server
           };
         };
       };
