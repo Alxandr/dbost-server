@@ -3,7 +3,10 @@
 
   # the nixConfig here only affects the flake itself, not the system configuration!
   nixConfig = {
-    experimental-features = [ "nix-command" "flakes" ];
+    experimental-features = [
+      "nix-command"
+      "flakes"
+    ];
     trusted-users = [ "alxandr" ];
 
     substituters = [
@@ -28,8 +31,10 @@
     # Pin our primary nixpkgs repository. This is the main nixpkgs repository
     # we'll use for our configurations. Be very careful changing this because
     # it'll impact your entire system.
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-23.11";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
+
+    flake-parts.url = "github:hercules-ci/flake-parts";
 
     nix-system = {
       url = "github:Alxandr/nix-system";
@@ -39,13 +44,43 @@
   };
 
   outputs =
-    { nix-system
-    , ...
-    }:
-    nix-system.lib.mkSystem {
-      flake = "github:Alxandr/dbost-server";
-      hosts = {
-        dbost = ./host;
-      };
-    };
+    inputs@{ flake-parts, nix-system, ... }:
+    flake-parts.lib.mkFlake { inherit inputs; } (
+      top@{
+        config,
+        withSystem,
+        moduleWithSystem,
+        ...
+      }:
+      {
+        imports = [
+          nix-system.flakeModules.flake-path
+          nix-system.flakeModules.systems
+          nix-system.flakeModules.disko
+        ];
+        systems = [
+          "x86_64-linux"
+          "aarch64-linux"
+        ];
+
+        flake.path = "github:Alxandr/dbost-server";
+
+        systemConfigurations.systems.dbost = {
+          system = "aarch64-linux";
+          hardware = ./system/hardware.nix;
+          configuration = ./system/configuration.nix;
+          users = {
+            alxandr = ./users/alxandr;
+          };
+          drives = {
+            imports = [ nix-system.diskoConfigurations.btrfs ];
+            disko.devices.disk.root.device = "/dev/sda";
+            disko.swap.root = {
+              enable = true;
+              size = "8G";
+            };
+          };
+        };
+      }
+    );
 }
