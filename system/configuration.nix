@@ -57,7 +57,7 @@
       traefikEnvironmentFile = config.sops.secrets."traefik.env".path;
 
       # config
-      config = {
+      settings = {
         domains."alxandr.me" = {
           base_domain = "alxandr.me";
           cert_resolver = "letsencrypt";
