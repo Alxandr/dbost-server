@@ -73,6 +73,7 @@
     # Enable envoy
     services.caddy = {
       enable = true;
+      configFile = ./Caddyfile;
     };
 
     # Setup auto-upgrade
