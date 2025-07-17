@@ -17,7 +17,7 @@
         # restartUnits = [ "pangolin.service" ];
       };
       "traefik.env" = {
-        sopsFile = ../secrets/traefik/traefik.env;
+        sopsFile = ../secrets/pangolin/traefik.env;
         format = "dotenv";
         # restartUnits = [ "traefik.service" ];
       };
