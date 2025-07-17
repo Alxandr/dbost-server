@@ -74,7 +74,6 @@
 
         systemConfigurations.sharedModules = [
           nix-system.nixosModules.sops
-          ./nixos_modules/pangolin.nix
           (
             { pkgs, ... }:
             {
@@ -88,10 +87,8 @@
                   in
                   {
                     inherit (unstable)
-                      fosrl-pangolin
-                      fosrl-newt
-                      fosrl-gerbil
-                      traefik
+                      headscale
+                      envoy
                       ;
                   }
                 )

@@ -27,6 +27,14 @@
     networking.networkmanager.enable = true;
     networking.nftables.enable = true;
     networking.firewall.enable = true;
+    networking.firewall.allowedTCPPorts = [
+      80 # HTTP
+      443 # HTTPS
+    ];
+    networking.firewall.allowedUDPPorts = [
+      41641
+      3478
+    ];
 
     # Enable SSH
     services.openssh = {
@@ -48,24 +56,24 @@
       ];
     };
 
-    # Pangolin
-    services.pangolin = {
+    # Enable Headscale
+    services.headscale = {
       enable = true;
-      baseDomain = "alxandr.me";
-      dashboardDomain = "pangolin.alxandr.me";
-      openFirewall = true;
-
-      # secrets
-      pangolinEnvironmentFile = config.sops.secrets."pangolin.env".path;
-      traefikEnvironmentFile = config.sops.secrets."traefik.env".path;
-
-      # config
       settings = {
-        domains."alxandr.me" = {
-          base_domain = "alxandr.me";
-          cert_resolver = "letsencrypt";
+        server_url = "https://headscale.alxandr.me";
+        prefixes.allocation = "random";
+        dns = {
+          magic_dns = true;
+          base_domain = "tailnet.alxandr.me";
+          nameservers.global = [ ];
         };
       };
+    };
+
+    # Enable envoy
+    services.envoy = {
+      enable = true;
+      settings = import ./envoy.nix;
     };
 
     # Setup auto-upgrade
