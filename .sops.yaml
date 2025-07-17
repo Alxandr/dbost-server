@@ -1,0 +1,10 @@
+keys:
+  - &admin_alxandr age1p5alx5uqjc30fqffmryv3hq9pw5pgwx0knm6rzyncd2tmnmwa4eqgdq6jh
+  - &server_pangolin age15pskxvhquvc8jr3ydpql83ns955umgyusmvzf2mnk92a55sdv53s59yp0v
+
+creation_rules:
+  - path_regex: secrets/pangolin/[^/]+\.(yaml|json|env|ini)$
+    key_groups:
+      - age:
+          - *admin_alxandr
+          - *server_pangolin

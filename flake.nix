@@ -73,6 +73,7 @@
         flake.path = "github:Alxandr/dbost-server";
 
         systemConfigurations.sharedModules = [
+          nix-system.nixosModules.sops
           ./nixos_modules/pangolin.nix
           (
             { pkgs, ... }:
@@ -110,6 +111,18 @@
             };
           };
         };
+
+        perSystem =
+          { pkgs, ... }:
+          {
+            devShells.default = pkgs.mkShell {
+              packages = with pkgs; [
+                ssh-to-age
+                sops
+                just
+              ];
+            };
+          };
       }
     );
 }

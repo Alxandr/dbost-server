@@ -5,7 +5,18 @@
     boot.loader.systemd-boot.enable = true;
     boot.loader.efi.canTouchEfiVariables = true;
 
+    # Enable the qemu guest agent
     services.qemuGuest.enable = true;
+
+    # Decrypt secrets
+    sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+    sops.secrets = {
+      "pangolin.env" = {
+        sopsFile = ../secrets/pangolin/pangolin.env;
+        format = "dotenv";
+        # restartUnits = [ "pangolin.service" ];
+      };
+    };
 
     # Enable networking
     networking.networkmanager.enable = true;
