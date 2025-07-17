@@ -80,25 +80,25 @@
               config.nixpkgs.overlays = [
                 (
                   final: prev:
-                  let
-                    unstable = import nixpkgs-unstable {
-                      inherit (prev) system;
-                    };
-                  in
+                  # let
+                  #   unstable = import nixpkgs-unstable {
+                  #     inherit (prev) system;
+                  #   };
+                  # in
                   {
-                    inherit (unstable)
-                      headscale
-                      envoy
-                      ;
+                    # inherit (unstable)
+                    #   headscale
+                    #   envoy
+                    #   ;
                     inherit (config.flake.packages."${prev.system}") caddy;
-                  }
-                )
+                  })
               ];
             }
           )
         ];
 
         systemConfigurations.systems.pangolin = {
+          unstable = true;
           system = "aarch64-linux";
           hardware = ./system/hardware.nix;
           configuration = ./system/configuration.nix;
