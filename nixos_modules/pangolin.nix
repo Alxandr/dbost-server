@@ -523,18 +523,9 @@ in
                 rule = "Host(`${cfg.dashboardDomain}`) && !PathPrefix(`/api/v1`)";
                 service = "next-service";
                 entryPoints = [ "websecure" ];
-                tls =
-                  lib.optionalAttrs (finalSettings.domains.domain1.prefer_wildcard_cert) {
-                    domains = [
-                      { main = cfg.baseDomain; }
-                      { sans = "*.${cfg.baseDomain}"; }
-                    ];
-                  }
-                  //
-                  # common
-                  {
-                    certResolver = "letsencrypt";
-                  };
+                tls = {
+                  certResolver = "letsencrypt";
+                };
               };
 
               # API router (handles /api/v1 paths)
