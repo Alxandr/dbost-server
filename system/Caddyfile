@@ -1,15 +1,21 @@
 {
+	debug
+	http_port 80
+	https_port 443
+	default_bind [0.0.0.0 ::1]
+
+	email "alxandr@alxandr.me"
+
 	layer4 {
 		0.0.0.0:443 {
 			@headscale tls sni headscale.alxandr.me
 			route @headscale {
-				tls
-				proxy localhost:8080
+				proxy localhost:10443
 			}
 		}
 	}
 }
 
-0.0.0.0:80 {
-	redir https://{host}{uri} permanent
+headscale.alxandr.me:10443 {
+	reverse_proxy localhost:8080
 }
