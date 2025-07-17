@@ -1,9 +1,10 @@
 {
 
+  admin = import ./envoy/admin.nix;
+  overload_manager = import ./envoy/overload_manager.nix;
+  layered_runtime = import ./envoy/layered_runtime.nix;
+
   static_resources = {
-    admin = import ./envoy/admin.nix;
-    overload_manager = import ./envoy/overload_manager.nix;
-    layered_runtime = import ./envoy/layered_runtime.nix;
     clusters = import ./envoy/clusters.nix;
 
     listeners = [
