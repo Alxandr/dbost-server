@@ -90,6 +90,7 @@
                       headscale
                       envoy
                       ;
+                    inherit (config.flake.packages."${prev.system}") caddy;
                   }
                 )
               ];
@@ -115,8 +116,28 @@
         };
 
         perSystem =
-          { pkgs, ... }:
           {
+            # pkgs,
+            lib,
+            system,
+            ...
+          }:
+          let
+            pkgs = import nixpkgs-unstable {
+              inherit system;
+            };
+
+          in
+          {
+            packages.caddy = pkgs.caddy.withPlugins {
+              plugins = [ "github.com/mholt/caddy-l4@v0.0.0-20250530154005-4d3c80e89c5f" ];
+              hash =
+                {
+                  "x86_64-linux" = "sha256-O2shDuAA4OjUx44uOxMbd5iQUQVl6GUuFKqv+P/PXNM=";
+                }
+                ."${system}" or lib.fakeHash;
+            };
+
             devShells.default = pkgs.mkShell {
               packages = with pkgs; [
                 ssh-to-age

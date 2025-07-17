@@ -71,9 +71,8 @@
     };
 
     # Enable envoy
-    services.envoy = {
+    services.caddy = {
       enable = true;
-      settings = import ./envoy.nix;
     };
 
     # Setup auto-upgrade
