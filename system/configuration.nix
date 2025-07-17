@@ -23,8 +23,10 @@
       };
     };
 
-    # Enable networking
+    # Enable networking & firewall
     networking.networkmanager.enable = true;
+    networking.nftables.enable = true;
+    networking.firewall.enable = true;
 
     # Enable SSH
     services.openssh = {
