@@ -53,6 +53,7 @@
       enable = true;
       baseDomain = "alxandr.me";
       dashboardDomain = "pangolin.alxandr.me";
+      openFirewall = true;
 
       # secrets
       pangolinEnvironmentFile = config.sops.secrets."pangolin.env".path;
