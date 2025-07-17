@@ -12,6 +12,12 @@ let
   cfgFile = format.generate "config.yml" finalSettings;
 
   pangolinConf = {
+    # this is a dummy password and is overwritten by the environment variable USERS_SERVERADMIN_PASSWORD declared in pangolinEnvironmentFile
+    users.server_admin = {
+      email = "fake@example.com";
+      password = "Password123!";
+    };
+
     app = {
       dashboard_url = "https://${cfg.dashboardDomain}";
       log_level = "info";
