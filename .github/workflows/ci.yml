@@ -9,44 +9,53 @@ on:
       - main
 
 jobs:
-  checks:
-    runs-on: ubuntu-latest
-    needs: []
-    steps:
-      - uses: actions/checkout@v4
-      - name: Check Nix flake Nixpkgs inputs
-        uses: DeterminateSystems/flake-checker-action@main
-
   build:
-    runs-on: ubuntu-latest
-    needs: []
+    runs-on: ${{ matrix.runs-on }}
+
+    strategy:
+      matrix:
+        include:
+          - system: x86_64-linux
+            runs-on: ubuntu-latest
+          #- system: aarch64-linux
+
     steps:
+      - name: Configure git
+        run: |
+          git config --global core.autocrlf false
+          git config --global core.symlinks true
+          git config --global fetch.parallel 32
+
       - uses: actions/checkout@v4
 
       - name: Install Nix
-        uses: DeterminateSystems/nix-installer-action@v4
+        uses: nixbuild/nix-quick-install-action@v32
+        with:
+          nix_conf: |
+            keep-env-derivations = true
+            keep-outputs = true
 
-      - name: Setup Nix cache
-        uses: DeterminateSystems/magic-nix-cache-action@v2
+      - uses: nix-community/cache-nix-action@v6
+        with:
+          # restore and save a cache using this key
+          primary-key: nix-${{ runner.os }}-${{ hashFiles('**/*.nix', 'flake.lock') }}
+          # if there's no cache hit, restore a cache by this prefix
+          restore-prefixes-first-match: nix-${{ runner.os }}-
+          # collect garbage until Nix store size (in bytes) is at most this number
+          # before trying to save a new cache
+          # 1 GB = 1073741824 B
+          gc-max-store-size-linux: 1073741824
+          # do purge caches
+          purge: true
+          # purge all versions of the cache
+          purge-prefixes: nix-${{ runner.os }}-
+          # created more than this number of seconds ago relative to the start of the `Post Restore` phase
+          purge-created: 0
+          # except the version with the `primary-key`, if it exists
+          purge-primary-key: never
 
       - name: Show flake
         run: nix flake show
 
       - name: Check flake
         run: nix flake check
-      # - name: Build
-      #   run: |
-      #     for host in $(nix eval .#hosts --accept-flake-config --json | jq -r '.[]'); do
-      #       if [ "$host" = "installer" ]; then
-      #         continue
-      #       fi
-      #       echo "Building for $host"
-      #       nix build -L --accept-flake-config ".#nixosConfigurations.${host}.config.system.build.toplevel"
-      #     done
-      # - name: Deploy
-      #   if: github.ref == 'refs/heads/main'
-      #   env:
-      #     CACHIX_ACTIVATE_TOKEN: "${{ secrets.CACHIX_ACTIVATE_TOKEN }}"
-      #   run: |
-      #     cachix push domenkozar-private ./result
-      #     cachix deploy activate --agent cherimoya ./result
