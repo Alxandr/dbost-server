@@ -8,6 +8,26 @@
     # Enable networking
     networking.networkmanager.enable = true;
 
+    # Enable SSH
+    services.openssh = {
+      enable = true;
+      settings = {
+        PasswordAuthentication = false;
+        PermitRootLogin = "no";
+        AllowUsers = [ "alxandr" ];
+        UseDns = true;
+        X11Forwarding = false;
+      };
+    };
+
+    # Enable sshguard
+    services.sshguard = {
+      enable = true;
+      whitelist = [
+        "home.alxandr.me"
+      ];
+    };
+
     # Pangolin
     services.pangolin = {
       # enable = true;
