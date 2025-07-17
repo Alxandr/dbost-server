@@ -62,6 +62,7 @@
           nix-system.flakeModules.flake-path
           nix-system.flakeModules.systems
           nix-system.flakeModules.disko
+          nix-system.flakeModules.install
         ];
         systems = [
           "x86_64-linux"
@@ -92,7 +93,7 @@
           )
         ];
 
-        systemConfigurations.systems.dbost = {
+        systemConfigurations.systems.pangolin = {
           system = "aarch64-linux";
           hardware = ./system/hardware.nix;
           configuration = ./system/configuration.nix;
