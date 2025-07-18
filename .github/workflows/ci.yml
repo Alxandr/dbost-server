@@ -59,7 +59,7 @@ jobs:
           purge-primary-key: never
 
       - name: Show flake
-        run: nix flake show
+        run: nix flake show --extra-experimental-features "nix-command flakes pipe-operators"
 
       - name: Check flake
-        run: nix flake check
+        run: nix flake check --extra-experimental-features "nix-command flakes pipe-operators"
