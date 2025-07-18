@@ -1,4 +1,9 @@
 { pkgs, config, ... }:
+
+let
+  policyFile = (pkgs.formats.json { }).generate "policy.json" (import ./headscale/policy.nix);
+
+in
 {
   config = {
     # Bootloader.
@@ -69,6 +74,7 @@
           nameservers.global = [ ];
           override_local_dns = false;
         };
+        policy.file = policyFile;
       };
     };
 
