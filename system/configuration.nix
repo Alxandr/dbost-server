@@ -30,18 +30,31 @@ in
 
     # Enable networking & firewall
     services.resolved.enable = true;
-    networking.networkmanager.enable = true;
-    networking.enableIPv6 = true;
-    networking.nftables.enable = true;
-    networking.firewall.enable = true;
-    networking.firewall.allowedTCPPorts = [
-      80 # HTTP
-      443 # HTTPS
-    ];
-    networking.firewall.allowedUDPPorts = [
-      41641
-      3478
-    ];
+    networking = {
+      networkmanager.enable = true;
+      enableIPv6 = true;
+      nftables.enable = true;
+      firewall.enable = true;
+      firewall.allowedTCPPorts = [
+        80 # HTTP
+        443 # HTTPS
+      ];
+      firewall.allowedUDPPorts = [
+        41641
+        3478
+      ];
+
+      interfaces.enp1s0.ipv6 = {
+        addresses = [
+          {
+            address = "2a01:4f9:c012:d5e9::";
+            prefixLength = 64;
+          }
+        ];
+        # gateway = "2a01:4f9:c012:d5e9::1";
+        gateway = "fe80::1";
+      };
+    };
 
     # Enable SSH
     services.openssh = {
