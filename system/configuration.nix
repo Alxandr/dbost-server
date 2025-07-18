@@ -44,6 +44,15 @@ in
         3478
       ];
 
+      interfaces.enp1s0.ipv4 = {
+        addresses = [
+          {
+            address = "46.62.174.170";
+            prefixLength = 32;
+          }
+        ];
+      };
+
       interfaces.enp1s0.ipv6 = {
         addresses = [
           {
@@ -51,6 +60,11 @@ in
             prefixLength = 64;
           }
         ];
+      };
+
+      defaultGateway = {
+        address = "172.31.1.1";
+        interface = "enp1s0";
       };
 
       defaultGateway6 = {
