@@ -24,6 +24,7 @@
     };
 
     # Enable networking & firewall
+    services.resolved.enable = true;
     networking.networkmanager.enable = true;
     networking.nftables.enable = true;
     networking.firewall.enable = true;
@@ -69,6 +70,17 @@
           override_local_dns = false;
         };
       };
+    };
+
+    # Enable Tailscale
+    services.tailscale = {
+      enable = true;
+      disableTaildrop = true;
+      openFirewall = true;
+      # useRoutingFeatures = "server";
+      # extraSetFlags = [
+      #   "--accept-dns=false"
+      # ];
     };
 
     # Enable envoy

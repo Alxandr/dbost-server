@@ -136,12 +136,14 @@
 
             devShells.default = pkgs.mkShell {
               packages = with pkgs; [
-                ssh-to-age
-                sops
-                just
-                vim
                 jq
+                just
+                sops
+                ssh-to-age
+                vim
+                wireguard-tools
                 yq-go
+
                 packages.caddy
               ];
             };
