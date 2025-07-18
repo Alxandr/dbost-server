@@ -66,6 +66,7 @@
           magic_dns = true;
           base_domain = "tailnet.alxandr.me";
           nameservers.global = [ ];
+          override_local_dns = false;
         };
       };
     };
