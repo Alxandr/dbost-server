@@ -15,7 +15,7 @@
 
 			route {
 				proxy {
-					proxy_protocol v2
+					#proxy_protocol v2
 					upstream 10.252.0.2:80
 				}
 			}
@@ -29,7 +29,7 @@
 
 			route {
 				proxy {
-					proxy_protocol v2
+					#proxy_protocol v2
 					upstream 10.252.0.2:443
 				}
 			}
