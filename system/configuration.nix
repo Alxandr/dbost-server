@@ -31,6 +31,7 @@ in
     # Enable networking & firewall
     services.resolved.enable = true;
     networking.networkmanager.enable = true;
+    networking.enableIPv6 = true;
     networking.nftables.enable = true;
     networking.firewall.enable = true;
     networking.firewall.allowedTCPPorts = [
