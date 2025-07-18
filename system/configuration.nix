@@ -74,7 +74,7 @@ in
           nameservers.global = [ ];
           override_local_dns = false;
         };
-        policy.file = policyFile;
+        policy.path = policyFile;
       };
     };
 
