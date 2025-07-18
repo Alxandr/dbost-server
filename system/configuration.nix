@@ -105,7 +105,7 @@ in
           nameservers.global = [ ];
           override_local_dns = false;
         };
-        policy.path = policyFile;
+        # policy.path = policyFile;
       };
     };
 
