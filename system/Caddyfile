@@ -8,8 +8,16 @@
 
 	layer4 {
 		0.0.0.0:80 {
-			route {
+			@headscale http host headscale.alxandr.me
+			route @headscale {
 				proxy 127.0.0.1:10080
+			}
+
+			route {
+				proxy {
+					proxy_protocol v2
+					upstream 10.252.0.2:80
+				}
 			}
 		}
 
@@ -17,6 +25,13 @@
 			@headscale tls sni headscale.alxandr.me
 			route @headscale {
 				proxy 127.0.0.1:10443
+			}
+
+			route {
+				proxy {
+					proxy_protocol v2
+					upstream 10.252.0.2:443
+				}
 			}
 		}
 	}
