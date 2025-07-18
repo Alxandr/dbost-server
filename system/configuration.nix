@@ -51,8 +51,11 @@ in
             prefixLength = 64;
           }
         ];
-        # gateway = "2a01:4f9:c012:d5e9::1";
-        gateway = "fe80::1";
+      };
+
+      defaultGateway6 = {
+        address = "fe80::1";
+        interface = "enp1s0";
       };
     };
 
