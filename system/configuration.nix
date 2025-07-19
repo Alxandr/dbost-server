@@ -98,19 +98,19 @@ in
             name = "talos-n1-cp";
             allowedIPs = [ "192.168.60.151/32" ];
             publicKey = "9WWQQ0n/Jd+dxgm1lbCvUyuzC/Tfe7i0ys0ruL0ycRE=";
-            presharedKeyFile = config.sops.secrets."wg0.talos-n1-cp.psk".path;
+            # presharedKeyFile = config.sops.secrets."wg0.talos-n1-cp.psk".path;
           }
           {
             name = "talos-n1-w1";
             allowedIPs = [ "192.168.60.161/32" ];
             publicKey = "rFE3DTVc4JSzjMMSeUipVR+ELgvIJKDRbhzceKbPz08=";
-            presharedKeyFile = config.sops.secrets."wg0.talos-n1-w1.psk".path;
+            # presharedKeyFile = config.sops.secrets."wg0.talos-n1-w1.psk".path;
           }
           {
             name = "talos-n1-w2";
             allowedIPs = [ "192.168.60.162/32" ];
             publicKey = "sNbXQB0mMpPLgMEPQ+/flXiG1nMVpkE/b38e4SHL9wk=";
-            presharedKeyFile = config.sops.secrets."wg0.talos-n1-w2.psk".path;
+            # presharedKeyFile = config.sops.secrets."wg0.talos-n1-w2.psk".path;
           }
         ];
       };
