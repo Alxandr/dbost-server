@@ -25,17 +25,17 @@ in
       "wg0.talos-n1-cp.psk" = {
         sopsFile = ../secrets/pangolin/wg0.yaml;
         format = "yaml";
-        key = "peers.talos-n1-cp.presharedKey";
+        key = "peers/talos-n1-cp/presharedKey";
       };
       "wg0.talos-n1-w1.psk" = {
         sopsFile = ../secrets/pangolin/wg0.yaml;
         format = "yaml";
-        key = "peers.talos-n1-w1.presharedKey";
+        key = "peers/talos-n1-w1/presharedKey";
       };
       "wg0.talos-n1-w2.psk" = {
         sopsFile = ../secrets/pangolin/wg0.yaml;
         format = "yaml";
-        key = "peers.talos-n1-w2.presharedKey";
+        key = "peers/talos-n1-w2/presharedKey";
       };
     };
 
