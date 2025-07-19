@@ -2,6 +2,7 @@
 
 let
   policyFile = (pkgs.formats.json { }).generate "policy.json" (import ./headscale/policy.nix);
+  wireguardPort = 51820;
 
 in
 {
@@ -16,15 +17,25 @@ in
     # Decrypt secrets
     sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
     sops.secrets = {
-      "pangolin.env" = {
-        sopsFile = ../secrets/pangolin/pangolin.env;
-        format = "dotenv";
-        restartUnits = [ "pangolin.service" ];
+      "wg0.key" = {
+        sopsFile = ../secrets/pangolin/wg0.yaml;
+        format = "yaml";
+        key = "key";
       };
-      "traefik.env" = {
-        sopsFile = ../secrets/pangolin/traefik.env;
-        format = "dotenv";
-        restartUnits = [ "traefik.service" ];
+      "wg0.talos-n1-cp.psk" = {
+        sopsFile = ../secrets/pangolin/wg0.yaml;
+        format = "yaml";
+        key = "peers.talos-n1-cp.presharedKey";
+      };
+      "wg0.talos-n1-w1.psk" = {
+        sopsFile = ../secrets/pangolin/wg0.yaml;
+        format = "yaml";
+        key = "peers.talos-n1-w1.presharedKey";
+      };
+      "wg0.talos-n1-w2.psk" = {
+        sopsFile = ../secrets/pangolin/wg0.yaml;
+        format = "yaml";
+        key = "peers.talos-n1-w2.presharedKey";
       };
     };
 
@@ -34,16 +45,22 @@ in
       networkmanager.enable = true;
       enableIPv6 = true;
       nftables.enable = true;
+      wireguard.enable = true;
+
+      # Firewall
       firewall.enable = true;
       firewall.allowedTCPPorts = [
         80 # HTTP
         443 # HTTPS
+        wireguardPort
       ];
       firewall.allowedUDPPorts = [
         41641
         3478
+        wireguardPort
       ];
 
+      # Interfaces
       interfaces.enp1s0.ipv4 = {
         addresses = [
           {
@@ -62,6 +79,42 @@ in
         ];
       };
 
+      # wireguard.interfaces.wg0 = {
+      #   # Determines the IP address and subnet of the server's end of the tunnel interface.
+      #   ips = [ "192.168.60.1/24" ];
+
+      #   # The port that WireGuard listens to. Must be accessible by the clients.
+      #   listenPort = wireguardPort;
+
+      #   # TODO: Masquerade?
+
+      #   # Path to the private key file.
+      #   privateKeyFile = config.sops.secrets."wg0.key".path;
+
+      #   # List of allowed peers.
+      #   peers = [
+      #     {
+      #       name = "talos-n1-cp";
+      #       allowedIPs = [ "192.168.60.151/32" ];
+      #       publicKey = "9WWQQ0n/Jd+dxgm1lbCvUyuzC/Tfe7i0ys0ruL0ycRE=";
+      #       presharedKeyFile = config.sops.secrets."wg0.talos-n1-cp.psk".path;
+      #     }
+      #     {
+      #       name = "talos-n1-w1";
+      #       allowedIPs = [ "192.168.60.161/32" ];
+      #       publicKey = "rFE3DTVc4JSzjMMSeUipVR+ELgvIJKDRbhzceKbPz08=";
+      #       presharedKeyFile = config.sops.secrets."wg0.talos-n1-w1.psk".path;
+      #     }
+      #     {
+      #       name = "talos-n1-w2";
+      #       allowedIPs = [ "192.168.60.162/32" ];
+      #       publicKey = "sNbXQB0mMpPLgMEPQ+/flXiG1nMVpkE/b38e4SHL9wk=";
+      #       presharedKeyFile = config.sops.secrets."wg0.talos-n1-w2.psk".path;
+      #     }
+      #   ];
+      # };
+
+      # Default gateways
       defaultGateway = {
         address = "172.31.1.1";
         interface = "enp1s0";
