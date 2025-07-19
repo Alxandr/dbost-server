@@ -82,6 +82,7 @@ in
       wireguard.interfaces.wg0 = {
         # Determines the IP address and subnet of the server's end of the tunnel interface.
         ips = [ "192.168.60.1/24" ];
+        mtu = 1420; # Default MTU for WireGuard
 
         # The port that WireGuard listens to. Must be accessible by the clients.
         listenPort = wireguardPort;
