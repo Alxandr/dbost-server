@@ -79,40 +79,40 @@ in
         ];
       };
 
-      # wireguard.interfaces.wg0 = {
-      #   # Determines the IP address and subnet of the server's end of the tunnel interface.
-      #   ips = [ "192.168.60.1/24" ];
+      wireguard.interfaces.wg0 = {
+        # Determines the IP address and subnet of the server's end of the tunnel interface.
+        ips = [ "192.168.60.1/24" ];
 
-      #   # The port that WireGuard listens to. Must be accessible by the clients.
-      #   listenPort = wireguardPort;
+        # The port that WireGuard listens to. Must be accessible by the clients.
+        listenPort = wireguardPort;
 
-      #   # TODO: Masquerade?
+        # TODO: Masquerade?
 
-      #   # Path to the private key file.
-      #   privateKeyFile = config.sops.secrets."wg0.key".path;
+        # Path to the private key file.
+        privateKeyFile = config.sops.secrets."wg0.key".path;
 
-      #   # List of allowed peers.
-      #   peers = [
-      #     {
-      #       name = "talos-n1-cp";
-      #       allowedIPs = [ "192.168.60.151/32" ];
-      #       publicKey = "9WWQQ0n/Jd+dxgm1lbCvUyuzC/Tfe7i0ys0ruL0ycRE=";
-      #       presharedKeyFile = config.sops.secrets."wg0.talos-n1-cp.psk".path;
-      #     }
-      #     {
-      #       name = "talos-n1-w1";
-      #       allowedIPs = [ "192.168.60.161/32" ];
-      #       publicKey = "rFE3DTVc4JSzjMMSeUipVR+ELgvIJKDRbhzceKbPz08=";
-      #       presharedKeyFile = config.sops.secrets."wg0.talos-n1-w1.psk".path;
-      #     }
-      #     {
-      #       name = "talos-n1-w2";
-      #       allowedIPs = [ "192.168.60.162/32" ];
-      #       publicKey = "sNbXQB0mMpPLgMEPQ+/flXiG1nMVpkE/b38e4SHL9wk=";
-      #       presharedKeyFile = config.sops.secrets."wg0.talos-n1-w2.psk".path;
-      #     }
-      #   ];
-      # };
+        # List of allowed peers.
+        peers = [
+          {
+            name = "talos-n1-cp";
+            allowedIPs = [ "192.168.60.151/32" ];
+            publicKey = "9WWQQ0n/Jd+dxgm1lbCvUyuzC/Tfe7i0ys0ruL0ycRE=";
+            presharedKeyFile = config.sops.secrets."wg0.talos-n1-cp.psk".path;
+          }
+          {
+            name = "talos-n1-w1";
+            allowedIPs = [ "192.168.60.161/32" ];
+            publicKey = "rFE3DTVc4JSzjMMSeUipVR+ELgvIJKDRbhzceKbPz08=";
+            presharedKeyFile = config.sops.secrets."wg0.talos-n1-w1.psk".path;
+          }
+          {
+            name = "talos-n1-w2";
+            allowedIPs = [ "192.168.60.162/32" ];
+            publicKey = "sNbXQB0mMpPLgMEPQ+/flXiG1nMVpkE/b38e4SHL9wk=";
+            presharedKeyFile = config.sops.secrets."wg0.talos-n1-w2.psk".path;
+          }
+        ];
+      };
 
       # Default gateways
       defaultGateway = {
