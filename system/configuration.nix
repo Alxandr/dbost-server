@@ -181,7 +181,6 @@ in
 
     # Enable and configure FRR
     services.frr = {
-      enable = true;
       bgpd.enable = true;
       bfdd.enable = true;
       config = ''
