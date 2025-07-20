@@ -52,7 +52,6 @@ in
       firewall.allowedTCPPorts = [
         80 # HTTP
         443 # HTTPS
-        wireguardPort
       ];
       firewall.allowedUDPPorts = [
         41641
@@ -178,6 +177,45 @@ in
     services.caddy = {
       enable = true;
       configFile = ./Caddyfile;
+    };
+
+    # Enable and configure FRR
+    services.frr = {
+      enable = true;
+      bgpd.enable = true;
+      bfdd.enable = true;
+      config = ''
+        router bgp 65060
+          bgp router-id 46.62.174.170
+          bgp fast-convergence
+          no bgp default ipv4-unicast
+
+          ! Peer group: Talos Control Plane
+          neighbor talos-cp peer-group
+          neighbor talos-cp remote-as 65001
+          neighbor talos-cp soft-reconfiguration inbound
+          neighbor talos-cp weight 100
+
+          ! Peer group: Talos Workers
+          neighbor talos-w peer-group
+          neighbor talos-w remote-as 65001
+          neighbor talos-w soft-reconfiguration inbound
+          neighbor talos-w weight 200
+
+          ! Talos Control Plane peers
+          neighbor 192.168.60.151 peer-group talos-cp
+
+          ! Talos Worker peers
+          neighbor 192.168.60.161 peer-group talos-w
+          neighbor 192.168.60.162 peer-group talos-w
+
+          ! IPv4 config
+          address-family ipv4 unicast
+            network 46.62.174.170/32
+            neighbor talos-cp activate
+            neighbor talos-w activate
+          exit-address-family
+      '';
     };
 
     # Setup auto-upgrade
