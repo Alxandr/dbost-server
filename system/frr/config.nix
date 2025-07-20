@@ -29,6 +29,7 @@ in
     bgp router-id ${router-id}
     bgp fast-convergence
     no bgp default ipv4-unicast
+    no bgp ebgp-requires-policy
 
     ${include "\n\n" "  " (peer: ''
       ! Peer: ${peer.name}
