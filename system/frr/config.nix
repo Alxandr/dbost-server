@@ -23,6 +23,8 @@ let
 
 in
 ''
+  frr defaults datacenter
+
   router bgp ${as}
     bgp router-id ${router-id}
     bgp fast-convergence
