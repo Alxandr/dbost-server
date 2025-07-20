@@ -8,6 +8,7 @@
   user.extraGroups = [
     "wheel"
     "keys"
+    "frrvty"
   ];
 
   home = ./home.nix;
