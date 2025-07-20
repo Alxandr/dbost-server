@@ -50,6 +50,7 @@ in
       # Firewall
       firewall.enable = true;
       firewall.allowedTCPPorts = [
+        179 # BGP
         80 # HTTP
         443 # HTTPS
       ];
