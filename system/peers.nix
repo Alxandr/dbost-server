@@ -16,7 +16,10 @@ let
           publicKey
           # presharedKeyFile
           ;
-        allowedIPs = [ "${ip}/32" ];
+        allowedIPs = [
+          "${ip}/32"
+          "10.252.0.0/16"
+        ];
       };
       bgp = {
         inherit ip weight;
