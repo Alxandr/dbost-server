@@ -87,20 +87,6 @@
       configFile = ./Caddyfile;
     };
 
-    # Enable and configure FRR
-    # services.frr = {
-    #   bgpd.enable = true;
-    #   bfdd.enable = true;
-    #   config = import ./frr/config.nix {
-    #     inherit lib peers;
-    #     router-id = "46.62.174.170";
-    #     as = "65060";
-    #     networks = [
-    #       "46.62.174.170/32"
-    #     ];
-    #   };
-    # };
-
     # Setup auto-upgrade
     system.autoUpgrade = {
       enable = true;

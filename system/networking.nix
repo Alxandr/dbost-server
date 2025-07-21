@@ -15,7 +15,7 @@ let
   secrets = config.sops.secrets;
 
   peerType = types.submodule (
-    { name, ... }:
+    { config, name, ... }:
     {
       options = {
         name = mkOption {
@@ -29,10 +29,21 @@ let
           description = "Internal IP address of the WireGuard peer.";
         };
 
+        bgp.as = mkOption {
+          type = types.int;
+          description = "BGP Autonomous System Number (ASN) for the peer.";
+        };
+
         bgp.weight = mkOption {
           type = types.int;
           description = "BGP weight for the peer.";
           default = 200; # Default weight
+        };
+
+        bgp.ipv4 = mkOption {
+          type = types.str;
+          description = "IPv4 address of the BGP peer.";
+          default = config.internal.ipv4;
         };
 
         port = mkOption {
@@ -55,6 +66,20 @@ in
     environment.systemPackages = with pkgs; [
       wireguard-tools
     ];
+
+    services.frr = {
+      bgpd.enable = true;
+      bfdd.enable = true;
+      config = import ./frr/config.nix {
+        inherit lib;
+        inherit (cfg) peers;
+        router-id = "46.62.174.170";
+        as = "65060";
+        networks = [
+          "46.62.174.170/32"
+        ];
+      };
+    };
 
     sops.secrets = mkMerge (
       lib.mapAttrsToList (name: peer: {

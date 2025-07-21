@@ -21,6 +21,8 @@ let
     in
     lib.concatStringsSep "\n" prefixedLines;
 
+  peerList = lib.attrValues peers;
+
 in
 ''
   frr defaults datacenter
@@ -33,10 +35,10 @@ in
 
     ${include "\n\n" "  " (peer: ''
       ! Peer: ${peer.name}
-      neighbor ${peer.bgp.ip} remote-as ${peer.bgp.as}
-      neighbor ${peer.bgp.ip} soft-reconfiguration inbound
-      neighbor ${peer.bgp.ip} weight ${builtins.toString peer.bgp.weight}
-    '') peers}
+      neighbor ${peer.bgp.ipv4} remote-as ${builtins.toString peer.bgp.as}
+      neighbor ${peer.bgp.ipv4} soft-reconfiguration inbound
+      neighbor ${peer.bgp.ipv4} weight ${builtins.toString peer.bgp.weight}
+    '') peerList}
 
     ! IPv4 config
     address-family ipv4 unicast
@@ -47,7 +49,7 @@ in
 
       ! Peers
       ${include "\n" "    " (peer: ''
-        neighbor ${peer.bgp.ip} activate
-      '') peers}
+        neighbor ${peer.bgp.ipv4} activate
+      '') peerList}
     exit-address-family
 ''
