@@ -30,7 +30,6 @@ in
   router bgp ${as}
     bgp router-id ${router-id}
     bgp fast-convergence
-    no bgp network import-check
     no bgp default ipv4-unicast
     no bgp ebgp-requires-policy
 
