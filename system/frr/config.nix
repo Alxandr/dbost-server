@@ -27,6 +27,11 @@ in
 ''
   frr defaults datacenter
 
+  ${include "\n\n" "" (peer: ''
+    ! Peer: ${peer.name}
+    ip route ${peer.bgp.ipv4}/32 wg-${peer.name}
+  '') peerList}
+
   router bgp ${as}
     bgp router-id ${router-id}
     bgp fast-convergence
