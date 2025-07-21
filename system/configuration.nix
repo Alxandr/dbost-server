@@ -1,20 +1,13 @@
 {
-  lib,
   pkgs,
-  config,
   ...
 }:
-
-let
-  policyFile = (pkgs.formats.json { }).generate "policy.json" (import ./headscale/policy.nix);
-  wireguardPort = 51820;
-  peers = import ./peers.nix {
-    inherit lib;
-    inherit (config.sops) secrets;
-  };
-
-in
 {
+  imports = [
+    ./networking.nix
+    ./peers.nix
+  ];
+
   config = {
     # Bootloader.
     boot.loader.systemd-boot.enable = true;
@@ -25,36 +18,32 @@ in
 
     # Decrypt secrets
     sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
-    sops.secrets = {
-      "wg0.key" = {
-        sopsFile = ../secrets/pangolin/wg0.yaml;
-        format = "yaml";
-        key = "key";
-      };
-      "wg0.talos-n1-cp.psk" = {
-        sopsFile = ../secrets/pangolin/wg0.yaml;
-        format = "yaml";
-        key = "peers/talos-n1-cp/presharedKey";
-      };
-      "wg0.talos-n1-w1.psk" = {
-        sopsFile = ../secrets/pangolin/wg0.yaml;
-        format = "yaml";
-        key = "peers/talos-n1-w1/presharedKey";
-      };
-      "wg0.talos-n1-w2.psk" = {
-        sopsFile = ../secrets/pangolin/wg0.yaml;
-        format = "yaml";
-        key = "peers/talos-n1-w2/presharedKey";
-      };
-    };
 
     # Enable networking & firewall
     services.resolved.enable = true;
+    systemd.network = {
+      enable = true;
+      networks."40-enp1s0" = {
+        name = "enp1s0";
+        matchConfig.Name = "enp1s0";
+        address = [
+          "46.62.174.170/32"
+          "2a01:4f9:c012:d5e9::/64"
+        ];
+        gateway = [
+          "172.31.1.1"
+          "fe80::1"
+        ];
+        # What is this?
+        networkConfig.IPv6PrivacyExtensions = "kernel";
+        networkConfig.DHCP = "no";
+      };
+    };
     networking = {
-      networkmanager.enable = true;
+      useNetworkd = true;
+      useDHCP = false;
       enableIPv6 = true;
       nftables.enable = true;
-      wireguard.enable = true;
 
       # Firewall
       firewall.enable = true;
@@ -66,55 +55,7 @@ in
       firewall.allowedUDPPorts = [
         41641
         3478
-        wireguardPort
       ];
-
-      # Interfaces
-      interfaces.enp1s0.ipv4 = {
-        addresses = [
-          {
-            address = "46.62.174.170";
-            prefixLength = 32;
-          }
-        ];
-      };
-
-      interfaces.enp1s0.ipv6 = {
-        addresses = [
-          {
-            address = "2a01:4f9:c012:d5e9::";
-            prefixLength = 64;
-          }
-        ];
-      };
-
-      wireguard.interfaces.wg0 = {
-        # Determines the IP address and subnet of the server's end of the tunnel interface.
-        ips = [ "192.168.60.1/24" ];
-        mtu = 1420; # Default MTU for WireGuard
-
-        # The port that WireGuard listens to. Must be accessible by the clients.
-        listenPort = wireguardPort;
-
-        # TODO: Masquerade?
-
-        # Path to the private key file.
-        privateKeyFile = config.sops.secrets."wg0.key".path;
-
-        # List of allowed peers.
-        peers = lib.map (peer: peer.wg) peers;
-      };
-
-      # Default gateways
-      defaultGateway = {
-        address = "172.31.1.1";
-        interface = "enp1s0";
-      };
-
-      defaultGateway6 = {
-        address = "fe80::1";
-        interface = "enp1s0";
-      };
     };
 
     # Enable SSH
@@ -137,33 +78,6 @@ in
       ];
     };
 
-    # Enable Headscale
-    services.headscale = {
-      enable = true;
-      settings = {
-        server_url = "https://headscale.alxandr.me";
-        prefixes.allocation = "random";
-        dns = {
-          magic_dns = true;
-          base_domain = "tailnet.alxandr.me";
-          nameservers.global = [ ];
-          override_local_dns = false;
-        };
-        # policy.path = policyFile;
-      };
-    };
-
-    # Enable Tailscale
-    services.tailscale = {
-      enable = true;
-      disableTaildrop = true;
-      openFirewall = true;
-      # useRoutingFeatures = "server";
-      # extraSetFlags = [
-      #   "--accept-dns=false"
-      # ];
-    };
-
     # Enable envoy
     services.caddy = {
       enable = true;
@@ -171,18 +85,18 @@ in
     };
 
     # Enable and configure FRR
-    services.frr = {
-      bgpd.enable = true;
-      bfdd.enable = true;
-      config = import ./frr/config.nix {
-        inherit lib peers;
-        router-id = "46.62.174.170";
-        as = "65060";
-        networks = [
-          "46.62.174.170/32"
-        ];
-      };
-    };
+    # services.frr = {
+    #   bgpd.enable = true;
+    #   bfdd.enable = true;
+    #   config = import ./frr/config.nix {
+    #     inherit lib peers;
+    #     router-id = "46.62.174.170";
+    #     as = "65060";
+    #     networks = [
+    #       "46.62.174.170/32"
+    #     ];
+    #   };
+    # };
 
     # Setup auto-upgrade
     system.autoUpgrade = {
