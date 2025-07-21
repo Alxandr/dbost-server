@@ -33,7 +33,7 @@
         routes = [
           {
             Gateway = "172.31.1.1";
-            GatewayOnlink = true;
+            GatewayOnLink = true;
           }
           { Gateway = "fe80::1"; }
         ];
