@@ -64,6 +64,7 @@ in
           key = "peers/${name}/peerPublicKey";
           owner = "root";
           group = "systemd-network";
+          restartUnits = [ "systemd-networkd" ];
         };
         "wg-bgp-mesh/${name}.own.key" = {
           sopsFile = ../secrets/pangolin/peers.yaml;
@@ -71,6 +72,7 @@ in
           key = "peers/${name}/ownPrivateKey";
           owner = "root";
           group = "systemd-network";
+          restartUnits = [ "systemd-networkd" ];
         };
         "wg-bgp-mesh/${name}.psk" = {
           sopsFile = ../secrets/pangolin/peers.yaml;
@@ -78,6 +80,7 @@ in
           key = "peers/${name}/presharedKey";
           owner = "root";
           group = "systemd-network";
+          restartUnits = [ "systemd-networkd" ];
         };
       }) cfg.peers
     );
