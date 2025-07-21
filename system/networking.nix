@@ -145,7 +145,10 @@ in
           matchConfig.Name = "wg-${name}";
           address = [ "192.168.60.1/32" ];
           routes = [
-            { Destination = "${peer.tunnel.ipv4}/32"; }
+            {
+              Destination = "${peer.tunnel.ipv4}/32";
+              Scope = "global";
+            }
             { Destination = "${peer.internal.ipv4}/32"; }
           ];
         };
