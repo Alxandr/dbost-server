@@ -30,9 +30,10 @@
           "46.62.174.170/32"
           "2a01:4f9:c012:d5e9::/64"
         ];
-        gateway = [
-          "172.31.1.1"
-          "fe80::1"
+        routes = [
+          { Address = "172.31.1.1/32"; }
+          { Gateway = "172.31.1.1"; }
+          { Gateway = "fe80::1"; }
         ];
         # What is this?
         networkConfig.IPv6PrivacyExtensions = "kernel";
