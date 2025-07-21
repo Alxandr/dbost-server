@@ -64,6 +64,7 @@ in
           key = "peers/${name}/peerPublicKey";
           owner = "root";
           group = "systemd-network";
+          mode = "0440";
           restartUnits = [ "systemd-networkd" ];
         };
         "wg-bgp-mesh/${name}.own.key" = {
@@ -72,6 +73,7 @@ in
           key = "peers/${name}/ownPrivateKey";
           owner = "root";
           group = "systemd-network";
+          mode = "0440";
           restartUnits = [ "systemd-networkd" ];
         };
         "wg-bgp-mesh/${name}.psk" = {
@@ -80,6 +82,7 @@ in
           key = "peers/${name}/presharedKey";
           owner = "root";
           group = "systemd-network";
+          mode = "0440";
           restartUnits = [ "systemd-networkd" ];
         };
       }) cfg.peers
