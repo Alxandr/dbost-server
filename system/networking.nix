@@ -62,16 +62,22 @@ in
           sopsFile = ../secrets/pangolin/peers.yaml;
           format = "yaml";
           key = "peers/${name}/peerPublicKey";
+          owner = "root";
+          group = "systemd-network";
         };
         "wg-bgp-mesh/${name}.own.key" = {
           sopsFile = ../secrets/pangolin/peers.yaml;
           format = "yaml";
           key = "peers/${name}/ownPrivateKey";
+          owner = "root";
+          group = "systemd-network";
         };
         "wg-bgp-mesh/${name}.psk" = {
           sopsFile = ../secrets/pangolin/peers.yaml;
           format = "yaml";
           key = "peers/${name}/presharedKey";
+          owner = "root";
+          group = "systemd-network";
         };
       }) cfg.peers
     );
