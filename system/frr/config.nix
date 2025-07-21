@@ -27,7 +27,9 @@ in
 ''
   frr defaults datacenter
 
-  debug bgp updates
+  debug bgp updates detail
+  debug bgp zebra
+  debug bgp nht
 
   router bgp ${as}
     bgp router-id ${router-id}
