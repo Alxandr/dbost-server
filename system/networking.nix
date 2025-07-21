@@ -148,7 +148,10 @@ in
         networks."50-wg-${name}" = {
           name = "wg-${name}";
           matchConfig.Name = "wg-${name}";
-          address = [ "${peer.tunnel.local.ipv4}/31" ];
+          address = [
+            "${peer.tunnel.local.ipv4}/31"
+            "192.168.60.1/32"
+          ];
           routes = [ ];
         };
       }) cfg.peers)
