@@ -113,7 +113,8 @@ in
         networks."50-wg-${name}" = {
           name = "wg-${name}";
           matchConfig.Name = "wg-${name}";
-          address = [ "${peer.internal.ipv4}/32" ];
+          address = [ "192.168.60.1/32" ];
+          routes = [ { Destination = "${peer.internal.ipv4}/32"; } ];
         };
       }) cfg.peers)
     );
