@@ -27,10 +27,6 @@ in
 ''
   frr defaults datacenter
 
-  debug bgp updates detail
-  debug bgp zebra
-  debug bgp nht
-
   router bgp ${as}
     bgp router-id ${router-id}
     bgp fast-convergence
@@ -46,11 +42,6 @@ in
 
     ! IPv4 config
     address-family ipv4 unicast
-      ! Networks
-      ${include "\n" "    " (network: ''
-        network ${network}
-      '') networks}
-
       ! Peers
       ${include "\n" "    " (peer: ''
         neighbor ${peer.bgp.ipv4} activate
