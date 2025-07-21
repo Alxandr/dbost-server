@@ -47,7 +47,6 @@
       useDHCP = false;
       enableIPv6 = true;
       nftables.enable = true;
-      wireguard.enable = true;
 
       # Firewall
       firewall.enable = true;

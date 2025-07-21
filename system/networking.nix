@@ -1,4 +1,9 @@
-{ lib, config, ... }:
+{
+  pkgs,
+  lib,
+  config,
+  ...
+}:
 let
   inherit (lib)
     types
@@ -46,6 +51,11 @@ in
   };
 
   config = {
+    boot.kernelModules = [ "wireguard" ];
+    environment.systemPackages = with pkgs; [
+      wireguard-tools
+    ];
+
     sops.secrets = mkMerge (
       lib.mapAttrsToList (name: peer: {
         "wg-bgp-mesh/${name}.peer.pub" = {
