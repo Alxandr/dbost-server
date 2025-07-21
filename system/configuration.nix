@@ -31,7 +31,10 @@
           "2a01:4f9:c012:d5e9::/64"
         ];
         routes = [
-          { Gateway = "172.31.1.1"; }
+          {
+            Gateway = "172.31.1.1";
+            GatewayOnlink = true;
+          }
           { Gateway = "fe80::1"; }
         ];
         # What is this?
