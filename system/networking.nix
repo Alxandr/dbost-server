@@ -73,8 +73,8 @@ in
     ];
 
     services.frr = {
-      bgpd.enable = false;
-      bfdd.enable = false;
+      bgpd.enable = true;
+      bfdd.enable = true;
       config = import ./frr/config.nix {
         inherit lib;
         inherit (cfg) peers;
