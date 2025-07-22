@@ -30,8 +30,8 @@ in
   router bgp ${as}
     bgp router-id ${router-id}
     bgp fast-convergence
+    bgp ebgp-requires-policy
     no bgp default ipv4-unicast
-    no bgp ebgp-requires-policy
 
     ${include "\n\n" "  " (peer: ''
       ! Peer: ${peer.name}

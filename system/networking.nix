@@ -26,12 +26,12 @@ let
 
         tunnel.local.ipv4 = mkOption {
           type = types.str;
-          description = "Tunnel-internal IP address of the WireGuard interface.";
+          description = "Tunnel-internal IP CIDR of the WireGuard interface.";
         };
 
         tunnel.peer.ipv4 = mkOption {
           type = types.str;
-          description = "Tunnel-internal IP address of the WireGuard peer.";
+          description = "Tunnel-internal IP CIDR of the WireGuard peer.";
         };
 
         bgp.as = mkOption {
@@ -48,7 +48,7 @@ let
         bgp.ipv4 = mkOption {
           type = types.str;
           description = "IPv4 address of the BGP peer.";
-          default = config.tunnel.peer.ipv4;
+          default = builtins.head (lib.strings.splitString "/" config.tunnel.peer.ipv4);
         };
 
         port = mkOption {
@@ -144,7 +144,7 @@ in
           name = "wg-${name}";
           matchConfig.Name = "wg-${name}";
           address = [
-            "${peer.tunnel.local.ipv4}/31"
+            "${peer.tunnel.local.ipv4}"
           ];
           routes = [ ];
         };
