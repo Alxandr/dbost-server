@@ -34,11 +34,6 @@ let
           description = "Tunnel-internal IP address of the WireGuard peer.";
         };
 
-        internal.ipv4 = mkOption {
-          type = types.str;
-          description = "Internal (NAT) IP address of the WireGuard peer.";
-        };
-
         bgp.as = mkOption {
           type = types.int;
           description = "BGP Autonomous System Number (ASN) for the peer.";
@@ -78,8 +73,8 @@ in
     ];
 
     services.frr = {
-      bgpd.enable = true;
-      bfdd.enable = true;
+      bgpd.enable = false;
+      bfdd.enable = false;
       config = import ./frr/config.nix {
         inherit lib;
         inherit (cfg) peers;
@@ -141,7 +136,7 @@ in
                 "::/0"
               ];
               PublicKeyFile = secrets."wg-bgp-mesh/${name}.peer.pub".path;
-              # PresharedKeyFile = secrets."wg-bgp-mesh/${name}.psk".path;
+              PresharedKeyFile = secrets."wg-bgp-mesh/${name}.psk".path;
             }
           ];
         };
@@ -150,7 +145,6 @@ in
           matchConfig.Name = "wg-${name}";
           address = [
             "${peer.tunnel.local.ipv4}/31"
-            "192.168.60.1/32"
           ];
           routes = [ ];
         };
