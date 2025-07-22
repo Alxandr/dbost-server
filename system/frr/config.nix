@@ -28,14 +28,15 @@ in
   frr defaults datacenter
 
   ! Defines a prefix-list for Talos LB address space
-  ip prefix-list talos-lb seq 5 permit 10.252.0.0/16 le 32
+  ip prefix-list talos-lb seq 5 permit 10.252.0.0/16 le 32 ge 24
+  ip prefix-list talos-lb description "Talos Load Balancer IPs"
 
   ! Creates a route-map that permits only Talos LB addresses
   route-map talos-lb permit 10
     match ip address prefix-list talos-lb
 
   ! Deny everything else
-  route-map talos-lb deny 10
+  route-map talos-lb deny 20
 
   router bgp ${as}
     bgp router-id ${router-id}
