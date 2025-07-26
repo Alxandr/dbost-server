@@ -143,6 +143,7 @@
                 vim
                 wireguard-tools
                 yq-go
+                netmaker
 
                 packages.caddy
               ];

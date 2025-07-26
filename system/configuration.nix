@@ -1,11 +1,13 @@
 {
   pkgs,
+  config,
   ...
 }:
 {
   imports = [
     ./networking.nix
     ./peers.nix
+    ./netmaker.nix
   ];
 
   config = {
@@ -18,6 +20,16 @@
 
     # Decrypt secrets
     sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
+    sops.secrets = {
+      "netmaker/netmaker.env" = {
+        sopsFile = ../secrets/pangolin/netmaker.env;
+        format = "dotenv";
+        owner = "netmaker";
+        group = "netmaker";
+        mode = "0400";
+        restartUnits = [ "netmaker" ];
+      };
+    };
 
     # Enable networking & firewall
     services.resolved.enable = true;
@@ -73,6 +85,12 @@
       };
     };
 
+    # Enable Netmaker
+    services.netmaker = {
+      enable = true;
+      configFile = config.sops.secrets."netmaker/netmaker.env".path;
+    };
+
     # Enable sshguard
     services.sshguard = {
       enable = true;
@@ -81,7 +99,7 @@
       ];
     };
 
-    # Enable envoy
+    # Enable caddy
     services.caddy = {
       enable = true;
       configFile = ./Caddyfile;
