@@ -45,8 +45,11 @@ in
       serviceConfig = {
         Type = "simple";
         Restart = "on-failure";
-        ExecStart = "${cfg.package}/bin/netmaker -c ${cfg.configFile}";
+        # ExecStart = "${cfg.package}/bin/netmaker -c ${cfg.configFile}";
+        ExecStart = "${pkgs.netmaker}/bin/netmaker";
         User = "netmaker";
+
+        EnvironmentFile = [ cfg.configFile ];
       };
     };
 
