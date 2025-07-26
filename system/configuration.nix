@@ -87,7 +87,7 @@
 
     # Enable Netmaker
     services.netmaker = {
-      enable = true;
+      enable = false;
       configFile = config.sops.secrets."netmaker/netmaker.env".path;
     };
 
