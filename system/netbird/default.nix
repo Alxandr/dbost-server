@@ -91,27 +91,35 @@ in
       ];
     };
 
-  systemd.services.netbird-relay = {
-    wantedBy = [ "multi-user.target" ];
-    after = [ "network.target" ];
-    description = "Netbird Relay Service";
+  systemd.services.netbird-relay =
+    let
+      dir = config.security.acme.certs.${relay-domain}.directory;
+    in
+    {
+      wantedBy = [ "multi-user.target" ];
+      after = [ "network.target" ];
+      description = "Netbird Relay Service";
 
-    serviceConfig = {
-      Type = "simple";
-      User = "netbird";
-      Group = "netbird";
+      serviceConfig = {
+        Type = "simple";
+        User = "netbird";
+        Group = "netbird";
 
-      ExecStart = "${relay-server} --log-file console --metrics-port 9090";
-      Environment = [
-        "NB_LOG_LEVEL=info"
-        "NB_LISTEN_ADDRESS=:33080"
-        "NB_EXPOSED_ADDRESS=rels://relay.netbird.alxandr.me/relay"
-      ];
-      EnvironmentFile = [
-        (secretPath "netbird/relay.env")
-      ];
+        ExecStart = ''${relay-server} --log-file console --metrics-port 9090 --tls-cert-file "$CREDENTIALS_DIRECTORY/cert.pem" --tls-key-file "$CREDENTIALS_DIRECTORY/pkey.pem"'';
+        Environment = [
+          "NB_LOG_LEVEL=info"
+          "NB_LISTEN_ADDRESS=:33080"
+          "NB_EXPOSED_ADDRESS=rels://relay.netbird.alxandr.me/relay"
+        ];
+        EnvironmentFile = [
+          (secretPath "netbird/relay.env")
+        ];
+        LoadCredential = [
+          "cert.pem:${dir}/fullchain.pem"
+          "pkey.pem:${dir}/key.pem"
+        ];
+      };
     };
-  };
 
   networking.firewall =
     let
