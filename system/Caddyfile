@@ -8,11 +8,6 @@
 
 	layer4 {
 		0.0.0.0:80 {
-			@headscale http host headscale.alxandr.me
-			route @headscale {
-				proxy 127.0.0.1:10080
-			}
-
 			route {
 				proxy {
 					proxy_protocol v2
@@ -22,9 +17,9 @@
 		}
 
 		0.0.0.0:443 {
-			@headscale tls sni headscale.alxandr.me
-			route @headscale {
-				proxy 127.0.0.1:10443
+			@relay tls sni relay.netbird.alxandr.me
+			route @relay {
+				proxy 127.0.0.1:33080
 			}
 
 			route {
@@ -35,8 +30,4 @@
 			}
 		}
 	}
-}
-
-headscale.alxandr.me {
-	reverse_proxy http://127.0.0.1:8080
 }

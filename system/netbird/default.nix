@@ -101,7 +101,7 @@ in
       User = "netbird";
       Group = "netbird";
 
-      ExecStart = "${relay-server}";
+      ExecStart = "${relay-server} --log-file console --metrics-port 9090";
       Environment = [
         "NB_LOG_LEVEL=info"
         "NB_LISTEN_ADDRESS=:33080"
