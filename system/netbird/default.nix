@@ -105,11 +105,13 @@ in
         User = "netbird";
         Group = "netbird";
 
-        ExecStart = ''${relay-server} --log-file console --metrics-port 9090 --tls-cert-file "$CREDENTIALS_DIRECTORY/cert.pem" --tls-key-file "$CREDENTIALS_DIRECTORY/pkey.pem"'';
+        ExecStart = ''${relay-server} --log-file console --metrics-port 9090'';
         Environment = [
           "NB_LOG_LEVEL=info"
           "NB_LISTEN_ADDRESS=:33080"
           "NB_EXPOSED_ADDRESS=rels://relay.netbird.alxandr.me/relay"
+          "NB_TLS_CERT_FILE=$CREDENTIALS_DIRECTORY/cert.pem"
+          "NB_TLS_KEY_FILE=$CREDENTIALS_DIRECTORY/pkey.pem"
         ];
         EnvironmentFile = [
           (secretPath "netbird/relay.env")
