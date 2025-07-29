@@ -7,6 +7,7 @@
   imports = [
     ./networking.nix
     ./peers.nix
+    ./netbird
   ];
 
   config = {
@@ -21,6 +22,10 @@
     sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
     sops.secrets = {
     };
+
+    # Configure acme default
+    security.acme.acceptTerms = true;
+    security.acme.defaults.email = "alxandr@alxandr.me";
 
     # Enable networking & firewall
     services.resolved.enable = true;
@@ -89,6 +94,14 @@
       enable = true;
       configFile = ./Caddyfile;
     };
+
+    # # Enable coturn
+    # services.coturn = {
+    #   enable = true;
+    #   realm = "pangolin.alxandr.me";
+    #   secure-stun = true;
+    #   no-cli = true;
+    # };
 
     # Setup auto-upgrade
     system.autoUpgrade = {

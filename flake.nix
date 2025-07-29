@@ -75,23 +75,12 @@
         systemConfigurations.sharedModules = [
           nix-system.nixosModules.sops
           (
-            { pkgs, ... }:
+            { ... }:
             {
               config.nixpkgs.overlays = [
-                (
-                  final: prev:
-                  # let
-                  #   unstable = import nixpkgs-unstable {
-                  #     inherit (prev) system;
-                  #   };
-                  # in
-                  {
-                    # inherit (unstable)
-                    #   headscale
-                    #   envoy
-                    #   ;
-                    inherit (config.flake.packages."${prev.system}") caddy;
-                  })
+                (final: prev: {
+                  inherit (config.flake.packages."${prev.system}") caddy netbird;
+                })
               ];
             }
           )
@@ -118,7 +107,7 @@
         perSystem =
           {
             # pkgs,
-            lib,
+            # lib,
             system,
             ...
           }:
@@ -133,6 +122,8 @@
               plugins = [ "github.com/mholt/caddy-l4@v0.0.0-20250530154005-4d3c80e89c5f" ];
               hash = "sha256-NLFl+ix36z6X1Anr1F6rdMPwSEysSVl84Ad71zprsbU=";
             };
+
+            packages.netbird = pkgs.callPackage ./packages/netbird.nix { ui = false; };
 
             devShells.default = pkgs.mkShell {
               packages = with pkgs; [
