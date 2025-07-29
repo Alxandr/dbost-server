@@ -7,7 +7,6 @@
   imports = [
     ./networking.nix
     ./peers.nix
-    ./netmaker.nix
   ];
 
   config = {
@@ -21,14 +20,6 @@
     # Decrypt secrets
     sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
     sops.secrets = {
-      "netmaker/netmaker.env" = {
-        sopsFile = ../secrets/pangolin/netmaker.env;
-        format = "dotenv";
-        owner = "netmaker";
-        group = "netmaker";
-        mode = "0400";
-        restartUnits = [ "netmaker" ];
-      };
     };
 
     # Enable networking & firewall
@@ -83,12 +74,6 @@
         UseDns = true;
         X11Forwarding = false;
       };
-    };
-
-    # Enable Netmaker
-    services.netmaker = {
-      enable = false;
-      configFile = config.sops.secrets."netmaker/netmaker.env".path;
     };
 
     # Enable sshguard
