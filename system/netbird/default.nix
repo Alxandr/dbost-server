@@ -40,8 +40,8 @@ in
       sopsFile = ../../secrets/pangolin/netbird.yaml;
       format = "yaml";
       key = "coturn/password";
-      owner = config.users.turnserver.name;
-      group = config.users.turnserver.group;
+      owner = config.users.users.turnserver.name;
+      group = config.users.users.turnserver.group;
       mode = "0440";
       restartUnits = [ "coturn" ];
     };
