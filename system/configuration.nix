@@ -21,11 +21,20 @@
     # Decrypt secrets
     sops.age.sshKeyPaths = [ "/etc/ssh/ssh_host_ed25519_key" ];
     sops.secrets = {
+      "acme/dnsimple.env" = {
+        sopsFile = ../secrets/pangolin/dnsimple.env;
+        format = "dotenv";
+        owner = "root";
+        group = "root";
+        mode = "0440";
+      };
     };
 
     # Configure acme default
     security.acme.acceptTerms = true;
     security.acme.defaults.email = "alxandr@alxandr.me";
+    security.acme.defaults.dnsProvider = "dnsimple";
+    security.acme.defaults.environmentFile = config.sops.secrets."acme/dnsimple.env".path;
 
     # Enable networking & firewall
     services.resolved.enable = true;

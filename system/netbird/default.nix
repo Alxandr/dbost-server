@@ -2,7 +2,6 @@
   lib,
   pkgs,
   config,
-  netbird,
   ...
 }:
 
@@ -15,13 +14,14 @@ let
   turn-domain = "turn.${base-domain}";
   relay-domain = "relay.${base-domain}";
 
-  relay-server = "${netbird}/bin/netbird-relay";
+  relay-server = "${pkgs.netbird}/bin/netbird-relay";
 
 in
 {
   users.groups.netbird = { };
   users.users.netbird = {
     group = config.users.groups.netbird.name;
+    isSystemUser = true;
   };
 
   security.acme.certs.${turn-domain} = {
@@ -37,7 +37,7 @@ in
 
   sops.secrets = {
     "netbird/coturn.password" = {
-      sopsFile = ../secrets/pangolin/netbird.yaml;
+      sopsFile = ../../secrets/pangolin/netbird.yaml;
       format = "yaml";
       key = "coturn/password";
       owner = "root";
@@ -46,7 +46,7 @@ in
       restartUnits = [ "coturn" ];
     };
     "netbird/relay.env" = {
-      sopsFile = ../secrets/pangolin/netbird.yaml;
+      sopsFile = ../../secrets/pangolin/netbird.yaml;
       format = "yaml";
       key = "relay/env";
       owner = config.users.users.netbird.name;
