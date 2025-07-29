@@ -78,8 +78,9 @@
             { ... }:
             {
               config.nixpkgs.overlays = [
+                nix-system.overlays.default
                 (final: prev: {
-                  inherit (config.flake.packages."${prev.system}") caddy netbird;
+                  inherit (config.flake.packages."${prev.system}") caddy;
                 })
               ];
             }
@@ -122,8 +123,6 @@
               plugins = [ "github.com/mholt/caddy-l4@v0.0.0-20250530154005-4d3c80e89c5f" ];
               hash = "sha256-NLFl+ix36z6X1Anr1F6rdMPwSEysSVl84Ad71zprsbU=";
             };
-
-            packages.netbird = pkgs.callPackage ./packages/netbird.nix { ui = false; };
 
             devShells.default = pkgs.mkShell {
               packages = with pkgs; [

@@ -104,14 +104,6 @@
       configFile = ./Caddyfile;
     };
 
-    # # Enable coturn
-    # services.coturn = {
-    #   enable = true;
-    #   realm = "pangolin.alxandr.me";
-    #   secure-stun = true;
-    #   no-cli = true;
-    # };
-
     # Setup auto-upgrade
     system.autoUpgrade = {
       enable = true;
