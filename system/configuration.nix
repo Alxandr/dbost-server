@@ -15,6 +15,10 @@
     boot.loader.systemd-boot.enable = true;
     boot.loader.efi.canTouchEfiVariables = true;
 
+    # Network buffers
+    boot.kernel.sysctl."net.core.rmem_max" = 7500000; # 7.5MB
+    boot.kernel.sysctl."net.core.wmem_max" = 7500000; # 7.5MB
+
     # Enable the qemu guest agent
     services.qemuGuest.enable = true;
 
