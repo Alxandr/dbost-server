@@ -70,6 +70,7 @@ in
       fingerprint
       user=netbird:@password@
       no-software-attribute
+      log-file=stdout
     '';
   };
 
