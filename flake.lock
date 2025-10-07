@@ -454,11 +454,11 @@
         "stylix-unstable": "stylix-unstable"
       },
       "locked": {
-        "lastModified": 1759714280,
-        "narHash": "sha256-TBJ+XaJ6qLy+NKHamb8+KKRyHLbUurWpbejMZpi35Ek=",
+        "lastModified": 1759821379,
+        "narHash": "sha256-jUhuKopk1w+Bh05Igcb8WYi1CRpQnB8/xlrFWOtA0VE=",
         "owner": "Alxandr",
         "repo": "nix-system",
-        "rev": "efc0dabebab951312d380baaad0e8a823c26d57b",
+        "rev": "055ef6adb13108b68affcd7aaa384b78ac6c50a1",
         "type": "github"
       },
       "original": {
@@ -553,11 +553,11 @@
     },
     "nixpkgs-unstable": {
       "locked": {
-        "lastModified": 1759381078,
-        "narHash": "sha256-gTrEEp5gEspIcCOx9PD8kMaF1iEmfBcTbO0Jag2QhQs=",
+        "lastModified": 1759733170,
+        "narHash": "sha256-TXnlsVb5Z8HXZ6mZoeOAIwxmvGHp1g4Dw89eLvIwKVI=",
         "owner": "nixos",
         "repo": "nixpkgs",
-        "rev": "7df7ff7d8e00218376575f0acdcc5d66741351ee",
+        "rev": "8913c168d1c56dc49a7718685968f38752171c3b",
         "type": "github"
       },
       "original": {
