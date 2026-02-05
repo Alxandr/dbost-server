@@ -440,11 +440,11 @@
         "stylix-unstable": "stylix-unstable"
       },
       "locked": {
-        "lastModified": 1770020549,
-        "narHash": "sha256-RIS4jGFV+eLewEcHraDtfOiGhBfwAV2NgBD76u3RXwc=",
+        "lastModified": 1770313430,
+        "narHash": "sha256-xWh1LSl63mMr+ReUVcRG9lZkN5RjyZ9jzdZk1rRG0ok=",
         "owner": "Alxandr",
         "repo": "nix-system",
-        "rev": "2b384407f4638e0120457bdfc89c4d5eeb4e8944",
+        "rev": "a7961e18b366784eeb8cab52807cc461f3299505",
         "type": "github"
       },
       "original": {
