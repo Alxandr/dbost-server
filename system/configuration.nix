@@ -125,6 +125,7 @@
       pkgs.yq-go
       pkgs.jq
       pkgs.dua
+      pkgs.herdr
     ];
 
     nix.settings = {
