@@ -1,4 +1,5 @@
 {
+  lib,
   pkgs,
   config,
   ...
@@ -13,6 +14,7 @@
   config = {
     # Bootloader.
     boot.loader.systemd-boot.enable = true;
+    boot.loader.systemd-boot.configurationLimit = 5;
     boot.loader.efi.canTouchEfiVariables = true;
 
     # Network buffers
@@ -124,6 +126,29 @@
       jq
       caddy
     ];
+
+    nix.settings = {
+      auto-optimise-store = true;
+    };
+
+    nix.gc = {
+      automatic = true;
+      dates = "weekly";
+      options = "-d";
+    };
+
+    systemd.services.prune-nixos-generations = {
+      description = "Prune old NixOS system generations";
+      serviceConfig.Type = "oneshot";
+      script = ''
+        ${lib.getExe pkgs.nix} -p /nix/var/nix/profiles/system --delete-generations +5
+      '';
+    };
+    systemd.timers.prune-nixos-generations = {
+      wantedBy = [ "timers.target" ];
+      timerConfig.OnCalendar = "weekly";
+      timerConfig.Persistent = true;
+    };
 
     # This value determines the NixOS release from which the default
     # settings for stateful data, like file locations and database versions
