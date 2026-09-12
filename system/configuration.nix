@@ -7,7 +7,7 @@
   imports = [
     ./networking.nix
     ./peers.nix
-    ./netbird
+    # ./netbird
   ];
 
   config = {
@@ -102,10 +102,10 @@
       ];
     };
 
-    # Enable caddy
-    services.caddy = {
+    # Enable haproxy
+    services.haproxy = {
       enable = true;
-      configFile = ./Caddyfile;
+      config = builtins.readFile ./haproxy.cfg;
     };
 
     # Setup auto-upgrade
