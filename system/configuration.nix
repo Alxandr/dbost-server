@@ -121,10 +121,10 @@
       rebootWindow.upper = "06:00";
     };
 
-    environment.systemPackages = with pkgs; [
-      yq-go
-      jq
-      caddy
+    environment.systemPackages = [
+      pkgs.yq-go
+      pkgs.jq
+      pkgs.dua
     ];
 
     nix.settings = {
