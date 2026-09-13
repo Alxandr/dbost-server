@@ -45,7 +45,13 @@ let
           description = "Allowed IPs for the WireGuard tunnel.";
         };
 
-        bgp.asn = mkOption {
+        bgp.self.asn = mkOption {
+          type = types.int;
+          description = "BGP Autonomous System Number (ASN) for self.";
+          default = 65010;
+        };
+
+        bgp.peer.asn = mkOption {
           type = types.int;
           description = "BGP Autonomous System Number (ASN) for the peer.";
         };
@@ -62,6 +68,17 @@ let
           default = config.tunnel.remote.address;
         };
 
+        bgp.import.prefixes = mkOption {
+          type = types.listOf types.str;
+          description = "BGP import prefixes for the peer.";
+        };
+
+        # bgp.export.prefixes = mkOption {
+        #   type = types.nullOr (types.listOf types.str);
+        #   description = "BGP export prefixes for the peer.";
+        #   default = null;
+        # };
+
         port = mkOption {
           type = types.port;
           description = "Port for the WireGuard peer to connect to.";
@@ -72,6 +89,12 @@ let
 in
 {
   options.wg-bgp-mesh = {
+    routerId = mkOption {
+      type = types.str;
+      description = "Router ID for the BGP mesh.";
+      default = "46.62.174.170";
+    };
+
     peers = mkOption {
       type = types.attrsOf peerType;
     };
@@ -82,6 +105,11 @@ in
     environment.systemPackages = with pkgs; [
       wireguard-tools
     ];
+
+    services.bird = {
+      enable = true;
+      config = pkgs.callPackage ./bird-config.nix { config = cfg; };
+    };
 
     # services.frr = {
     #   bgpd.enable = true;

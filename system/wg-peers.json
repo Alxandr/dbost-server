@@ -3,6 +3,10 @@
     "iface": "wgn1cp",
     "port": 51831,
     "asn": 65030,
+    "importPrefixes": [
+      "fddf:7f8f:a271:a239:0:11::/96",
+      "fddf:7f8f:a271:a252::/64+"
+    ],
     "local": {
       "address": "fddf:7f8f:a271:afff:7777:7777:7777:1c01/127"
     },
@@ -17,6 +21,10 @@
     "iface": "wgn1w1",
     "port": 51841,
     "asn": 65030,
+    "importPrefixes": [
+      "fddf:7f8f:a271:a239:0:21::/96",
+      "fddf:7f8f:a271:a252::/64+"
+    ],
     "local": {
       "address": "fddf:7f8f:a271:afff:7777:7777:7777:1101/127"
     },
@@ -31,6 +39,10 @@
     "iface": "wgn1w2",
     "port": 51842,
     "asn": 65030,
+    "importPrefixes": [
+      "fddf:7f8f:a271:a239:0:22::/96",
+      "fddf:7f8f:a271:a252::/64+"
+    ],
     "local": {
       "address": "fddf:7f8f:a271:afff:7777:7777:7777:1201/127"
     },
@@ -45,6 +57,10 @@
     "iface": "wgn2w1",
     "port": 51851,
     "asn": 65030,
+    "importPrefixes": [
+      "fddf:7f8f:a271:a239:0:31::/96",
+      "fddf:7f8f:a271:a252::/64+"
+    ],
     "local": {
       "address": "fddf:7f8f:a271:afff:7777:7777:7777:2101/127"
     },
@@ -59,6 +75,10 @@
     "iface": "wgn2w2",
     "port": 51852,
     "asn": 65030,
+    "importPrefixes": [
+      "fddf:7f8f:a271:a239:0:32::/96",
+      "fddf:7f8f:a271:a252::/64+"
+    ],
     "local": {
       "address": "fddf:7f8f:a271:afff:7777:7777:7777:2201/127"
     },
