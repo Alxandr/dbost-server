@@ -24,17 +24,28 @@ let
           default = name;
         };
 
-        tunnel.local.ipv4 = mkOption {
+        interface = mkOption {
+          type = types.str;
+          description = "Name of the wireguard network interface.";
+          default = "wg-${config.name}";
+        };
+
+        tunnel.local.address = mkOption {
           type = types.str;
           description = "Tunnel-internal IP CIDR of the WireGuard interface.";
         };
 
-        tunnel.peer.ipv4 = mkOption {
+        tunnel.remote.address = mkOption {
           type = types.str;
           description = "Tunnel-internal IP CIDR of the WireGuard peer.";
         };
 
-        bgp.as = mkOption {
+        tunnel.allowedIps = mkOption {
+          type = types.listOf types.str;
+          description = "Allowed IPs for the WireGuard tunnel.";
+        };
+
+        bgp.asn = mkOption {
           type = types.int;
           description = "BGP Autonomous System Number (ASN) for the peer.";
         };
@@ -45,10 +56,10 @@ let
           default = 200; # Default weight
         };
 
-        bgp.ipv4 = mkOption {
+        bgp.address = mkOption {
           type = types.str;
-          description = "IPv4 address of the BGP peer.";
-          default = builtins.head (lib.strings.splitString "/" config.tunnel.peer.ipv4);
+          description = "Address of the BGP peer.";
+          default = config.tunnel.remote.address;
         };
 
         port = mkOption {
@@ -72,44 +83,44 @@ in
       wireguard-tools
     ];
 
-    services.frr = {
-      bgpd.enable = true;
-      bfdd.enable = true;
-      config = import ./frr/config.nix {
-        inherit lib;
-        inherit (cfg) peers;
-        router-id = "46.62.174.170";
-        as = "65060";
-        networks = [
-          "46.62.174.170/32"
-        ];
-      };
-    };
+    # services.frr = {
+    #   bgpd.enable = true;
+    #   bfdd.enable = true;
+    #   config = import ./frr/config.nix {
+    #     inherit lib;
+    #     inherit (cfg) peers;
+    #     router-id = "46.62.174.170";
+    #     as = "65060";
+    #     networks = [
+    #       "46.62.174.170/32"
+    #     ];
+    #   };
+    # };
 
     sops.secrets = mkMerge (
       lib.mapAttrsToList (name: peer: {
-        "wg-bgp-mesh/${name}.peer.pub" = {
-          sopsFile = ../secrets/pangolin/peers.yaml;
+        "wg-bgp-mesh/${peer.name}.remote.pub" = {
+          sopsFile = ../secrets/pangolin/wg-peers.yaml;
           format = "yaml";
-          key = "peers/${name}/peerPublicKey";
+          key = "${peer.name}/peerPublicKey";
           owner = "root";
           group = "systemd-network";
           mode = "0440";
           restartUnits = [ "systemd-networkd" ];
         };
-        "wg-bgp-mesh/${name}.own.key" = {
-          sopsFile = ../secrets/pangolin/peers.yaml;
+        "wg-bgp-mesh/${peer.name}.own.key" = {
+          sopsFile = ../secrets/pangolin/wg-peers.yaml;
           format = "yaml";
-          key = "peers/${name}/ownPrivateKey";
+          key = "${peer.name}/ownPrivateKey";
           owner = "root";
           group = "systemd-network";
           mode = "0440";
           restartUnits = [ "systemd-networkd" ];
         };
-        "wg-bgp-mesh/${name}.psk" = {
-          sopsFile = ../secrets/pangolin/peers.yaml;
+        "wg-bgp-mesh/${peer.name}.psk" = {
+          sopsFile = ../secrets/pangolin/wg-peers.yaml;
           format = "yaml";
-          key = "peers/${name}/presharedKey";
+          key = "${peer.name}/presharedKey";
           owner = "root";
           group = "systemd-network";
           mode = "0440";
@@ -121,30 +132,28 @@ in
     systemd.network = mkMerge (
       [ { enable = true; } ]
       ++ (lib.mapAttrsToList (name: peer: {
-        netdevs."50-wg-${name}" = {
+        netdevs."50-wg-${peer.name}" = {
           netdevConfig.Kind = "wireguard";
-          netdevConfig.Name = "wg-${name}";
+          netdevConfig.Name = peer.interface;
           netdevConfig.MTUBytes = 1420; # Default MTU for WireGuard
 
           wireguardConfig.ListenPort = peer.port;
-          wireguardConfig.PrivateKeyFile = secrets."wg-bgp-mesh/${name}.own.key".path;
+          wireguardConfig.PrivateKeyFile = secrets."wg-bgp-mesh/${peer.name}.own.key".path;
 
           wireguardPeers = [
             {
-              AllowedIPs = [
-                "0.0.0.0/0"
-                "::/0"
-              ];
-              PublicKeyFile = secrets."wg-bgp-mesh/${name}.peer.pub".path;
-              PresharedKeyFile = secrets."wg-bgp-mesh/${name}.psk".path;
+              AllowedIPs = peer.tunnel.allowedIps;
+              PublicKeyFile = secrets."wg-bgp-mesh/${peer.name}.remote.pub".path;
+              PresharedKeyFile = secrets."wg-bgp-mesh/${peer.name}.psk".path;
             }
           ];
         };
-        networks."50-wg-${name}" = {
-          name = "wg-${name}";
-          matchConfig.Name = "wg-${name}";
-          address = [
-            "${peer.tunnel.local.ipv4}"
+        networks."50-wg-${peer.name}" = {
+          name = peer.interface;
+          matchConfig.Name = peer.interface;
+          linkConfig.RequiredForOnline = "no";
+          addresses = [
+            { Address = "${peer.tunnel.local.address}"; }
           ];
           routes = [ ];
         };

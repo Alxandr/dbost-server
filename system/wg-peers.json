@@ -1,0 +1,72 @@
+{
+  "talos-n1-cp": {
+    "iface": "wgn1cp",
+    "port": 51831,
+    "asn": 65030,
+    "local": {
+      "address": "fddf:7f8f:a271:afff:7777:7777:7777:1c01/127"
+    },
+    "remote": {
+      "address": "fddf:7f8f:a271:afff:7777:7777:7777:1c00/127"
+    },
+    "allowedIps": [
+      "fddf:7f8f:a271:a000::/52"
+    ]
+  },
+  "talos-n1-w1": {
+    "iface": "wgn1w1",
+    "port": 51841,
+    "asn": 65030,
+    "local": {
+      "address": "fddf:7f8f:a271:afff:7777:7777:7777:1101/127"
+    },
+    "remote": {
+      "address": "fddf:7f8f:a271:afff:7777:7777:7777:1100/127"
+    },
+    "allowedIps": [
+      "fddf:7f8f:a271:a000::/52"
+    ]
+  },
+  "talos-n1-w2": {
+    "iface": "wgn1w2",
+    "port": 51842,
+    "asn": 65030,
+    "local": {
+      "address": "fddf:7f8f:a271:afff:7777:7777:7777:1201/127"
+    },
+    "remote": {
+      "address": "fddf:7f8f:a271:afff:7777:7777:7777:1200/127"
+    },
+    "allowedIps": [
+      "fddf:7f8f:a271:a000::/52"
+    ]
+  },
+  "talos-n2-w1": {
+    "iface": "wgn2w1",
+    "port": 51851,
+    "asn": 65030,
+    "local": {
+      "address": "fddf:7f8f:a271:afff:7777:7777:7777:2101/127"
+    },
+    "remote": {
+      "address": "fddf:7f8f:a271:afff:7777:7777:7777:2100/127"
+    },
+    "allowedIps": [
+      "fddf:7f8f:a271:a000::/52"
+    ]
+  },
+  "talos-n2-w2": {
+    "iface": "wgn2w2",
+    "port": 51852,
+    "asn": 65030,
+    "local": {
+      "address": "fddf:7f8f:a271:afff:7777:7777:7777:2201/127"
+    },
+    "remote": {
+      "address": "fddf:7f8f:a271:afff:7777:7777:7777:2200/127"
+    },
+    "allowedIps": [
+      "fddf:7f8f:a271:a000::/52"
+    ]
+  }
+}
