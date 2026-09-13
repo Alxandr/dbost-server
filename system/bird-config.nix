@@ -32,7 +32,7 @@ in
   protocol kernel kernel_ipv6 {
     ipv6 {
       import none;
-      export none; # TODO: after testing, enable
+      export all;
     };
   }
 
