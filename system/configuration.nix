@@ -78,8 +78,9 @@
         443 # HTTPS
       ];
       firewall.allowedUDPPorts = [
-        41641
-        3478
+        41641 # Tailscale/headscale
+        3478 # STUN
+        3784 # BFD
       ];
     };
 
