@@ -51,7 +51,7 @@
         matchConfig.Name = "enp1s0";
         address = [
           "46.62.174.170/32"
-          "2a01:4f9:c012:d5e9::/64"
+          "2a01:4f9:c012:d5e9::1/64"
         ];
         routes = [
           {
