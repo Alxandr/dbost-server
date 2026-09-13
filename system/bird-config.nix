@@ -12,6 +12,14 @@ let
       strict bind yes;
       passive on;
 
+      ${lib.optionalString peer.bgp.bfd.enable ''
+        bfd {
+          min tx interval ${lib.toString peer.bgp.bfd.transmitInterval} ${peer.bgp.bfd.transmitIntervalUnit};
+          min rx interval ${lib.toString peer.bgp.bfd.receiveInterval} ${peer.bgp.bfd.receiveIntervalUnit};
+          multiplier ${lib.toString peer.bgp.bfd.detectMultiplier};
+        };
+      ''}
+
       ipv6 {
         import filter {
           if net ~ [ ${lib.concatStringsSep ", " peer.bgp.import.prefixes} ] then accept;
@@ -29,7 +37,11 @@ in
 
   protocol device {}
 
+  protocol bfd {}
+
   protocol kernel kernel_ipv6 {
+    merge paths on;
+
     ipv6 {
       import none;
       export all;

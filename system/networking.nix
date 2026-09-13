@@ -68,6 +68,47 @@ let
           default = config.tunnel.remote.address;
         };
 
+        bgp.holdTime = mkOption {
+          type = types.int;
+          description = "BGP hold time for the peer.";
+        };
+
+        bgp.bfd.enable = mkOption {
+          type = types.bool;
+          description = "Enable BFD for the BGP peer.";
+          default = false;
+        };
+
+        bgp.bfd.transmitInterval = mkOption {
+          type = types.int;
+          description = "BFD transmit interval for the BGP peer.";
+          default = 1;
+        };
+
+        bgp.bfd.transmitIntervalUnit = mkOption {
+          type = types.str;
+          description = "BFD transmit interval unit for the BGP peer.";
+          default = "s";
+        };
+
+        bgp.bfd.receiveInterval = mkOption {
+          type = types.int;
+          description = "BFD receive interval for the BGP peer.";
+          default = 1;
+        };
+
+        bgp.bfd.receiveIntervalUnit = mkOption {
+          type = types.str;
+          description = "BFD receive interval unit for the BGP peer.";
+          default = "s";
+        };
+
+        bgp.bfd.detectMultiplier = mkOption {
+          type = types.int;
+          description = "BFD detect multiplier for the BGP peer.";
+          default = 3;
+        };
+
         bgp.import.prefixes = mkOption {
           type = types.listOf types.str;
           description = "BGP import prefixes for the peer.";

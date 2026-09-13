@@ -15,7 +15,19 @@
     },
     "allowedIps": [
       "fddf:7f8f:a271:a000::/52"
-    ]
+    ],
+    "holdTime": 3,
+    "bfd": {
+      "transmitInterval": [
+        1,
+        "s"
+      ],
+      "receiveInterval": [
+        1,
+        "s"
+      ],
+      "detectMultiplier": 3
+    }
   },
   "talos-n1-w1": {
     "iface": "wgn1w1",
@@ -33,7 +45,19 @@
     },
     "allowedIps": [
       "fddf:7f8f:a271:a000::/52"
-    ]
+    ],
+    "holdTime": 3,
+    "bfd": {
+      "transmitInterval": [
+        1,
+        "s"
+      ],
+      "receiveInterval": [
+        1,
+        "s"
+      ],
+      "detectMultiplier": 3
+    }
   },
   "talos-n1-w2": {
     "iface": "wgn1w2",
@@ -51,7 +75,19 @@
     },
     "allowedIps": [
       "fddf:7f8f:a271:a000::/52"
-    ]
+    ],
+    "holdTime": 3,
+    "bfd": {
+      "transmitInterval": [
+        1,
+        "s"
+      ],
+      "receiveInterval": [
+        1,
+        "s"
+      ],
+      "detectMultiplier": 3
+    }
   },
   "talos-n2-w1": {
     "iface": "wgn2w1",
@@ -69,7 +105,19 @@
     },
     "allowedIps": [
       "fddf:7f8f:a271:a000::/52"
-    ]
+    ],
+    "holdTime": 3,
+    "bfd": {
+      "transmitInterval": [
+        1,
+        "s"
+      ],
+      "receiveInterval": [
+        1,
+        "s"
+      ],
+      "detectMultiplier": 3
+    }
   },
   "talos-n2-w2": {
     "iface": "wgn2w2",
@@ -87,6 +135,18 @@
     },
     "allowedIps": [
       "fddf:7f8f:a271:a000::/52"
-    ]
+    ],
+    "holdTime": 3,
+    "bfd": {
+      "transmitInterval": [
+        1,
+        "s"
+      ],
+      "receiveInterval": [
+        1,
+        "s"
+      ],
+      "detectMultiplier": 3
+    }
   }
 }
