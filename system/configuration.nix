@@ -8,7 +8,6 @@
   imports = [
     ./networking.nix
     ./peers.nix
-    # ./netbird
   ];
 
   config = {
@@ -33,7 +32,17 @@
         group = "root";
         mode = "0440";
       };
+      "netbird.env" = {
+        sopsFile = ../secrets/pangolin/netbird.env;
+        format = "dotenv";
+        owner = "root";
+        group = "root";
+        mode = "0440";
+      };
     };
+
+    services.netbird-relay.enable = true;
+    services.netbird-relay.authSecretFile = config.sops.secrets."netbird.env".path;
 
     # Configure acme default
     security.acme.acceptTerms = true;

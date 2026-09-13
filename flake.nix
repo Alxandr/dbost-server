@@ -48,62 +48,80 @@
 
   outputs =
     inputs@{ flake-parts, nix-system, ... }:
-    flake-parts.lib.mkFlake { inherit inputs; } {
-      imports = [
-        nix-system.flakeModules.flake-path
-        nix-system.flakeModules.home-manager
-        nix-system.flakeModules.disko
-        nix-system.flakeModules.user-manager
-        nix-system.flakeModules.systems
-      ];
-
-      config = {
-        debug = true;
-
-        flake.path = "github:Alxandr/dbost-server";
-        systems = [
-          "x86_64-linux"
-          "aarch64-linux"
+    flake-parts.lib.mkFlake { inherit inputs; } (
+      { config, ... }: {
+        imports = [
+          nix-system.flakeModules.flake-path
+          nix-system.flakeModules.home-manager
+          nix-system.flakeModules.disko
+          nix-system.flakeModules.user-manager
+          nix-system.flakeModules.systems
         ];
 
-        systemConfigurations.sharedModules = [ nix-system.nixosModules.sops ];
-        systemConfigurations.systems.pangolin = {
-          unstable = true;
-          system = "aarch64-linux";
-          hardware = ./system/hardware.nix;
-          configuration = ./system/configuration.nix;
-          users = {
-            alxandr = ./users/alxandr;
-          };
-          drives = {
-            imports = [ nix-system.diskoConfigurations.btrfs ];
-            disko.devices.disk.root.device = "/dev/sda";
-            disko.swap.root = {
-              enable = true;
-              size = "8G";
-            };
-          };
-        };
+        config = {
+          debug = true;
 
-        perSystem =
-          {
-            pkgs,
-            # lib,
-            ...
-          }:
-          rec {
-            devShells.default = pkgs.mkShell {
-              packages = with pkgs; [
-                jq
-                just
-                sops
-                ssh-to-age
-                vim
-                wireguard-tools
-                yq-go
-              ];
+          flake.path = "github:Alxandr/dbost-server";
+          systems = [
+            "x86_64-linux"
+            "aarch64-linux"
+          ];
+
+          systemConfigurations.sharedModules = [
+            nix-system.nixosModules.sops
+            (import ./modules/netbird-relay.nix {
+              inherit (config.flake.packages.aarch64-linux) netbird-relay;
+            })
+          ];
+          systemConfigurations.systems.pangolin = {
+            unstable = true;
+            system = "aarch64-linux";
+            hardware = ./system/hardware.nix;
+            configuration = ./system/configuration.nix;
+            users = {
+              alxandr = ./users/alxandr;
+            };
+            drives = {
+              imports = [ nix-system.diskoConfigurations.btrfs ];
+              disko.devices.disk.root.device = "/dev/sda";
+              disko.swap.root = {
+                enable = true;
+                size = "8G";
+              };
             };
           };
-      };
-    };
+
+          perSystem =
+            {
+              pkgs,
+              # lib,
+              ...
+            }:
+            rec {
+              packages.netbird-relay = pkgs.netbird-relay.overrideAttrs (finalAttrs: {
+                # This needs to be kept in sync with the cluster components
+                version = "0.78.1";
+                src = pkgs.fetchFromGitHub {
+                  owner = "netbirdio";
+                  repo = "netbird";
+                  tag = "v${finalAttrs.version}";
+                  hash = "sha256-YWLorAu71hG5BJLXsZwtQf86o51KCn2/1wI1DRg/aCg=";
+                };
+              });
+
+              devShells.default = pkgs.mkShell {
+                packages = with pkgs; [
+                  jq
+                  just
+                  sops
+                  ssh-to-age
+                  vim
+                  wireguard-tools
+                  yq-go
+                ];
+              };
+            };
+        };
+      }
+    );
 }
