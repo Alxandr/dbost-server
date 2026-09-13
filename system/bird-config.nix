@@ -37,7 +37,7 @@ in
 
   protocol device {}
 
-  protocol bfd {}
+  protocol bfd { debug all; }
 
   protocol kernel kernel_ipv6 {
     merge paths on;
