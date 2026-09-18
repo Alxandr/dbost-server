@@ -105,7 +105,7 @@
                   owner = "netbirdio";
                   repo = "netbird";
                   tag = "v${finalAttrs.version}";
-                  hash = "sha256-YWLorAu71hG5BJLXsZwtQf86o51KCn2/1wI1DRg/aCg=";
+                  hash = "sha256-E8NeS88Ab5sumDxyH54y3GIWcXQQzRT0UXO+xwcQpUU=";
                 };
               });
 
