@@ -85,12 +85,12 @@
         179 # BGP
         80 # HTTP
         443 # HTTPS
+        22000 # Syncthing
       ];
       firewall.allowedUDPPorts = [
         41641 # Tailscale/headscale
         3478 # STUN
         3784 # BFD
-        22000 # Syncthing
       ];
     };
 
