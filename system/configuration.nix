@@ -90,6 +90,7 @@
         41641 # Tailscale/headscale
         3478 # STUN
         3784 # BFD
+        22000 # Syncthing
       ];
     };
 
