@@ -107,6 +107,8 @@
                   tag = "v${finalAttrs.version}";
                   hash = "sha256-VDYwuo7qMq01QrbV422yd/KAZhnqP9ymrqrgJbDqMGg=";
                 };
+
+                vendorHash = "sha256-qbcc/j8tCTnUrX9jhxKFMudnNVKa4Xah+76aBOFS0AQ=";
               });
 
               devShells.default = pkgs.mkShell {
