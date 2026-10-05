@@ -432,11 +432,11 @@
         "stylix": "stylix"
       },
       "locked": {
-        "lastModified": 1791089781,
-        "narHash": "sha256-dbbZzo/sEBYeGC+1WDinC8RaU4dusIYjrFm5Tp9vK0g=",
+        "lastModified": 1791185666,
+        "narHash": "sha256-fnl1hXmf9FT5O/kaOaSNC3W4lWR3M3ENuHGwwNGQ1Zc=",
         "owner": "Alxandr",
         "repo": "nix-system",
-        "rev": "a8b2330a8504359df782d192da1c1e5cb9534f1c",
+        "rev": "b80abfeef246a83fba0f67f3c88ad39d201dd093",
         "type": "github"
       },
       "original": {
