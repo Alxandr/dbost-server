@@ -100,15 +100,15 @@
             rec {
               packages.netbird-relay = pkgs.netbird-relay.overrideAttrs (finalAttrs: {
                 # This needs to be kept in sync with the cluster components
-                version = "0.78.1";
+                version = "0.81.5";
                 src = pkgs.fetchFromGitHub {
                   owner = "netbirdio";
                   repo = "netbird";
                   tag = "v${finalAttrs.version}";
-                  hash = "sha256-VDYwuo7qMq01QrbV422yd/KAZhnqP9ymrqrgJbDqMGg=";
+                  hash = "sha256-Ma5ngsTqcblG6uLCn7IcSvI9vUhbIs4gr2nD4ZBdTAo=";
                 };
 
-                vendorHash = "sha256-qbcc/j8tCTnUrX9jhxKFMudnNVKa4Xah+76aBOFS0AQ=";
+                vendorHash = "sha256-TlW+Y4n3sImdBQ6qXQgfKndNftQDLwu8YsqucVCIfyY=";
               });
 
               devShells.default = pkgs.mkShell {
